@@ -1,0 +1,31 @@
+package org.bstu.govoronok.model;
+
+import lombok.*;
+
+import javax.persistence.*;
+import java.util.Set;
+
+@Getter
+@Setter
+@ToString
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
+@Table(name = "AuctionStatus")
+public class AuctionStatus {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id", nullable = false)
+    private Long id;
+
+    @Column(name = "name", nullable = false)
+    private Long name;
+
+    @OneToMany (mappedBy="auctionStatus", fetch=FetchType.EAGER)
+    private Set<Auction> auctions;
+
+    @OneToMany(mappedBy = "statusHistory")
+    private Set<StatusHistory> statusHistories;
+
+
+}

@@ -1,0 +1,86 @@
+package org.bstu.govoronok.controller;
+
+import org.bstu.govoronok.model.*;
+import org.bstu.govoronok.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+
+import java.util.UUID;
+
+
+@Controller
+public class UserController {
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
+
+    private UserService userService;
+
+    @Autowired
+    public UserController(UserService userService){
+        this.userService = userService;
+    }
+
+    @GetMapping("/")
+    public String redirectToSingIn(){
+        return "redirect:/signup";
+    }
+
+    @GetMapping("/signup")
+    public String createNewUser(Model model) {
+        model.addAttribute("user", new User());
+        return "authentication/signup";
+    }
+
+    @PostMapping("/signup")
+    public String addNewUser(@ModelAttribute("user") User user) {
+        userService.addNewUser(user);
+        return "redirect:/authentication/confirmAlert";
+    }
+
+    @GetMapping("/signin")
+    public String signin(){
+        return "/authentication/signin";
+    }
+
+    @GetMapping("/authentication/forgot_password")
+    public String resetPassword(){
+        return "/authentication/resetPassword";
+    }
+
+    @PostMapping("/authentication/forgot_password")
+    public String resetPassword(Model model, @ModelAttribute("username") String username) {
+        userService.resetPasswordForUserByEmail(username);
+        return "redirect:/authentication/confirmAlert";
+    }
+
+    @GetMapping("/authentication/reset")
+    public String setNewPassword(){
+        return "authentication/newPassword";
+    }
+
+    @PostMapping("/authentication/reset")
+    public String setNewPassword(@ModelAttribute("code") UUID code,
+                                 String password, String passwordConfirm) {
+        if(password.equals(passwordConfirm)){
+            userService.setNewPasswordWithCode(code , password);
+        }
+        return "redirect:/signin";
+    }
+
+    @GetMapping("/authentication/confirm/{code}")
+    public String confirmUserCode(@PathVariable("code") UUID code) {
+        userService.confirmUser(code);
+        return "redirect:/signin";
+    }
+
+    @GetMapping("/authentication/confirmAlert")
+    public String getConfirmAlert() {
+        return "/authentication/confirmAlert";
+    }
+}

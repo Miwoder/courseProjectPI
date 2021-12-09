@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>SIGN IN</title>
+</head>
+<body>
+
+<form method="POST" th:name="f" th:action="@{/signin}">
+    <fieldset style="width:200px">
+        <legend>Please sign in</legend>
+        <div th:if="${param.error}" class="alert alert-error" > Invalid email/password or user unconfirmed</div>
+        <div th:if="${param.logout}" class="alert alert-success" > You have been logged out</div>
+        <label for="username">Email</label>
+        <input type="text" id="username" name="username">
+        <br>
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password">
+        <div class="form-actions">
+            <button type="submit" class="button">Sign in</button>
+        </div>
+        <a href="signup">Sign up</a>
+        <br/>
+        <a href="/authentication/forgot_password">Forgot your password?</a>
+    </fieldset>
+</form>
+
+</body>
+</html>
