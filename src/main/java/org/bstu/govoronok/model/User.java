@@ -41,7 +41,7 @@ public class User {
     @Column(name = "phone", nullable = false)
     private String phone;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     @JoinColumn(name="payment_id")
     private Payment payment;
 

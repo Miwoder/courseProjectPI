@@ -118,8 +118,8 @@ public class UserService implements UserDetailsService {
         message.setFrom("hovor007@gmail.com");
         message.setTo(email);
         message.setSubject("Confirm registration");
-        message.setText("Follow this link to continue registration: http://localhost:8087/authentication/confirm/" + code +
-                "\n Please, note if you are trader you should wait until administration confirmed you too");
+        message.setText("Follow this link to continue registration: http://localhost:8087/authentication/confirm/" +
+                        code);
         emailSender.send(message);
     }
 

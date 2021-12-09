@@ -1,6 +1,9 @@
 package org.bstu.govoronok.controller;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.bstu.govoronok.model.*;
+import org.bstu.govoronok.service.PaymentService;
 import org.bstu.govoronok.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,19 +15,17 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.List;
 import java.util.UUID;
 
 
 @Controller
+@RequiredArgsConstructor
+@Slf4j
 public class UserController {
-    private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
 
-    private UserService userService;
-
-    @Autowired
-    public UserController(UserService userService){
-        this.userService = userService;
-    }
+    private final UserService userService;
+    private final PaymentService paymentService;
 
     @GetMapping("/")
     public String redirectToSingIn(){
@@ -39,6 +40,7 @@ public class UserController {
 
     @PostMapping("/signup")
     public String addNewUser(@ModelAttribute("user") User user) {
+        user.setPayment(paymentService.getPaymentByName("Cash"));
         userService.addNewUser(user);
         return "redirect:/authentication/confirmAlert";
     }
