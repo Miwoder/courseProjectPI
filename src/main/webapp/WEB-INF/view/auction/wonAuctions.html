@@ -46,7 +46,7 @@
 
 
 <div th:each="auction: ${auctions}">
-    <h3 th:text="Auction + ${auction.getId()}"><a href="/auctions/{id}(id=${auction.getId()})"> Auction </a></h3>
+    <h3 th:text="Auction + ${auction.getId()}"></h3>
     <label for="itemName">Item:</label>
     <span id="itemName" th:text="${auction.getItem().getName()}"></span>
     <br>
@@ -62,6 +62,9 @@
     <label for="place">Place name:</label>
     <span id="place" th:text="${auction.getPlace().getName()}"></span>
     <br>
+    <form th:method="GET" th:action="@{/auctions/{id}(id=${auction.getId()})}">
+        <input type="submit" value="Auction info"/>
+    </form>
 </div>
 
 </body>

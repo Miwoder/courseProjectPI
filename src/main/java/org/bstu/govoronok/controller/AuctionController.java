@@ -85,9 +85,16 @@ public class AuctionController {
     }
 
     @GetMapping("/auctions/{id}")
-    public String getWonAuctions(Model model, @ModelAttribute("id") Long auctionId, Principal principal) {
+    public String getWonAuctions(Model model, @PathVariable("id") Long auctionId, Principal principal) {
         model.addAttribute("auction", auctionService.getAuctionById(auctionId));
         return "/auction/auction";
+    }
+
+    @GetMapping("/my/auctions")
+    public String getMyAuctions(Model model, Principal principal) {
+        User user = userService.findByUsername(principal.getName());
+        model.addAttribute("auctions", auctionService.getAllAuctionsByUser(user.getId()));
+        return "/auction/auctions";
     }
 
 }

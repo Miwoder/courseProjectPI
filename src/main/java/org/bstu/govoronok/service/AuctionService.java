@@ -32,6 +32,10 @@ public class AuctionService {
         return auctionRepository.getAuctionsByAuctionStatus_NameAndUser_Id("END", id);
     }
 
+    public List<Auction> getAllAuctionsByUser(Long id){
+        return auctionRepository.getAuctionsByItem_User_Id(id);
+    }
+
     public List<Auction> getAllConfirmedAuctions(){
         return auctionRepository.getAuctionsByAuctionStatus_NameIsNotAndAuctionStatus_NameIsNot("Unconfirmed", "END");
     }
