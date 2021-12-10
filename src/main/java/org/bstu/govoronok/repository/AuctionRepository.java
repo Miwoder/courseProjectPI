@@ -13,5 +13,7 @@ public interface AuctionRepository extends JpaRepository<Auction, Long> {
 
     public List<Auction> getAuctionsByAuctionStatus_Name(String name);
 
+    public List<Auction> getAuctionsByAuctionStatus_NameAndUser_Id(String name, Long id);
+
     public List<Auction> getAuctionsByAuctionStatus_NameIsNotAndAuctionStatus_NameIsNot(String status, String status2);
 }

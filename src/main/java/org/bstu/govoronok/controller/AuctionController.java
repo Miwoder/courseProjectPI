@@ -77,4 +77,17 @@ public class AuctionController {
         return "redirect:/administration";
     }
 
+    @GetMapping("/my/won")
+    public String getWonAuctions(Model model, Principal principal) {
+        User user = userService.findByUsername(principal.getName());
+        model.addAttribute("auctions", auctionService.getAllWonAuctionsByUser(user.getId()));
+        return "/auction/wonAuctions";
+    }
+
+    @GetMapping("/auctions/{id}")
+    public String getWonAuctions(Model model, @ModelAttribute("id") Long auctionId, Principal principal) {
+        model.addAttribute("auction", auctionService.getAuctionById(auctionId));
+        return "/auction/wonAuctions";
+    }
+
 }

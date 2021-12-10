@@ -28,6 +28,10 @@ public class AuctionService {
         return auctionRepository.getAuctionsByAuctionStatus_Name("Unconfirmed");
     }
 
+    public List<Auction> getAllWonAuctionsByUser(Long id){
+        return auctionRepository.getAuctionsByAuctionStatus_NameAndUser_Id("END", id);
+    }
+
     public List<Auction> getAllConfirmedAuctions(){
         return auctionRepository.getAuctionsByAuctionStatus_NameIsNotAndAuctionStatus_NameIsNot("Unconfirmed", "END");
     }
