@@ -19,7 +19,7 @@ public class Place {
     private Long id;
 
     @Column(name = "name", nullable = false)
-    private Long name;
+    private String name;
 
     @Column(name = "country", nullable = false)
     private String country;

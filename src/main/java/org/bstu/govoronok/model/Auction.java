@@ -1,6 +1,7 @@
 package org.bstu.govoronok.model;
 
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -25,28 +26,30 @@ public class Auction {
     @Column(name = "highBet", nullable = false)
     private String highBet;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "startDate", nullable = false)
     private LocalDate startDate;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "endDate", nullable = false)
     private LocalDate endDate;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name="itemId")
     private Item item;
 
-    @ManyToOne (optional=false, cascade=CascadeType.ALL)
+    @ManyToOne (optional=false, cascade=CascadeType.MERGE)
     @JoinColumn (name="userId")
     private User user;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name="placeId")
     private Place place;
 
     @OneToMany (mappedBy="auction", fetch=FetchType.EAGER)
     private Set<BetHistory> betHistorySet;
 
-    @ManyToOne (optional=false, cascade=CascadeType.ALL)
+    @ManyToOne (optional=false, cascade=CascadeType.MERGE)
     @JoinColumn (name="statusID")
     private AuctionStatus auctionStatus;
 

@@ -24,12 +24,12 @@ public class Item {
     @Column(name = "description", nullable = false)
     private String description;
 
-    @ManyToOne (optional=false, cascade=CascadeType.ALL)
+    @ManyToOne (optional=false, cascade=CascadeType.MERGE)
     @JoinColumn (name="user_id")
     private User user;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="type_id")
+    @ManyToOne (optional=false, cascade=CascadeType.MERGE)
+    @JoinColumn (name="type_id")
     private ItemType itemType;
 
     @OneToOne(mappedBy = "item")

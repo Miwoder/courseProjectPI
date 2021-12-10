@@ -19,7 +19,7 @@ public class AuctionStatus {
     private Long id;
 
     @Column(name = "name", nullable = false)
-    private Long name;
+    private String name;
 
     @OneToMany (mappedBy="auctionStatus", fetch=FetchType.EAGER)
     private Set<Auction> auctions;

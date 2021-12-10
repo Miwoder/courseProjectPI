@@ -4,6 +4,7 @@ package org.bstu.govoronok.model;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -21,6 +22,6 @@ public class ItemType {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @OneToOne(mappedBy = "itemType")
-    private Item item;
+    @OneToMany (mappedBy="itemType", fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
+    private Set<Item> items;
 }

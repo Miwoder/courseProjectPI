@@ -45,12 +45,12 @@ public class User {
     @JoinColumn(name="payment_id")
     private Payment payment;
 
-    @OneToMany (mappedBy="user", fetch=FetchType.EAGER)
+    @OneToMany (mappedBy="user", cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     private Set<Item> items;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     private Set<Auction> auctions;
 
-    @OneToOne(mappedBy = "user")
+    @OneToOne(mappedBy = "user", cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     private BetHistory betHistory;
 }
