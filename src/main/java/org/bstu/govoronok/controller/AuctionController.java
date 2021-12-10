@@ -87,7 +87,7 @@ public class AuctionController {
     @GetMapping("/auctions/{id}")
     public String getWonAuctions(Model model, @ModelAttribute("id") Long auctionId, Principal principal) {
         model.addAttribute("auction", auctionService.getAuctionById(auctionId));
-        return "/auction/wonAuctions";
+        return "/auction/auction";
     }
 
 }

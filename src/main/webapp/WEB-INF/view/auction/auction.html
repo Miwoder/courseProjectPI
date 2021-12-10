@@ -25,6 +25,9 @@
             <li class="nav-item">
                 <a class="nav-link" href="/my">My page</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/signin">Sign in</a>
+            </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     My page
@@ -45,22 +48,24 @@
 
 
 
-<div th:each="auction: ${auctions}">
-    <h3 th:text="Auction + ${auction.getId()}"> <a href="/auctions/{id}(id=${auction.getId()})">Auction</a> </h3>
+<div th:object="${auction}">
+    <label for="id">Id:</label>
+    <span id="id" th:text="${auction.get().getId()}"></span>
+    <br>
     <label for="itemName">Item:</label>
-    <span id="itemName" th:text="${auction.getItem().getName()}"></span>
+    <span id="itemName" th:text="${auction.get().getItem().getName()}"></span>
     <br>
     <label for="startDate">Start:</label>
-    <span id="startDate" th:text="${auction.getStartDate()}"></span>
+    <span id="startDate" th:text="${auction.get().getStartDate()}"></span>
     <br>
     <label for="endDate">Ends:</label>
-    <span id="endDate" th:text="${auction.getEndDate()}"></span>
+    <span id="endDate" th:text="${auction.get().getEndDate()}"></span>
     <br>
     <label for="highBet">High bet:</label>
-    <span id="highBet" th:text="${auction.getHighBet()}"></span>
+    <span id="highBet" th:text="${auction.get().getHighBet()}"></span>
     <br>
     <label for="place">Place name:</label>
-    <span id="place" th:text="${auction.getPlace().getName()}"></span>
+    <span id="place" th:text="${auction.get().getPlace().getName()}"></span>
     <br>
 </div>
 
