@@ -37,7 +37,8 @@ public class AuctionService {
     }
 
     public List<Auction> getAllConfirmedAuctions(){
-        return auctionRepository.getAuctionsByAuctionStatus_NameIsNotAndAuctionStatus_NameIsNot("Unconfirmed", "END");
+        return auctionRepository.getAuctionsByAuctionStatus_NameIsNotAndAuctionStatus_NameIsNot("Unconfirmed",
+                "END");
     }
 
     public void deleteAuctionById(Long id){
@@ -46,5 +47,10 @@ public class AuctionService {
 
     public Optional<Auction> getAuctionById(Long id){
         return auctionRepository.findById(id);
+    }
+
+    public List<Auction> getAuctionByType(String type){
+        return auctionRepository.getAuctionsByItem_ItemType_NameAndAuctionStatus_NameIsNotAndAuctionStatus_NameIsNot(type,
+                "END", "Unconfirmed");
     }
 }

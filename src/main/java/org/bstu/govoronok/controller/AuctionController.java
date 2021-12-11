@@ -97,4 +97,27 @@ public class AuctionController {
         return "/auction/auctions";
     }
 
+    @GetMapping("/auctions/cars")
+    public String getAuctionsWithCars(Model model) {
+        model.addAttribute("auctions", auctionService.getAuctionByType("Cars"));
+        return "/auction/auctions";
+    }
+
+    @GetMapping("/auctions/furniture")
+    public String getAuctionsWithFurniture(Model model) {
+        model.addAttribute("auctions", auctionService.getAuctionByType("Furniture"));
+        return "/auction/auctions";
+    }
+
+    @GetMapping("/auctions/houses")
+    public String getAuctionsWithHouses(Model model) {
+        model.addAttribute("auctions", auctionService.getAuctionByType("Houses"));
+        return "/auction/auctions";
+    }
+
+    @GetMapping("/auctions/animals")
+    public String getAuctionsWithAnimals(Model model) {
+        model.addAttribute("auctions", auctionService.getAuctionByType("Animals"));
+        return "/auction/auctions";
+    }
 }
