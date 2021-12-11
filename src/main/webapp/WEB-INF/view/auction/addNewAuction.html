@@ -11,6 +11,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.js"></script>
 
+    <script th:src="@{/static/js/functions.js}"></script>
     <title>My page</title>
 </head>
 <body>
@@ -53,36 +54,40 @@
     <label for="startBet">Start bet: </label>
     <input type='text' th:field="*{startBet}" id="startBet"/>
     <br/>
-    <label for="startDate">Start date:</label>
-    <input type="text" class="date form-control" th:field="*{startDate}" id="startDate" style="width: 200px" />
-    <script type="text/javascript">
-        $(".date").datepicker({
-            format: "yyyy-mm-dd",
-        });
-    </script>
 
-    <label for="endDate">End date:</label>
-    <input type="text" class="date form-control" th:field="*{endDate}" id="endDate" style="width: 200px" />
-    <script type="text/javascript">
-        $(".date").datepicker({
-            format: "yyyy-mm-dd",
-        });
-    </script>
+    <label for="startDate">Start date </label>
+    <div class="input-group date">
+        <input type="text" class="form-control enterdatepicker" th:field="*{startDate}" id="startDate">
+        <div class="input-group-addon">
+            <span class="glyphicon glyphicon-th"></span>
+        </div>
+    </div>
+    <div style="color: red" th:if="${#fields.hasErrors('startDate')}"
+         th:errors="*{startDate}">Enter Date error
+    </div>
+    <label for="endDate">End date </label>
+    <div class="input-group date">
+        <input type="text" class="form-control exitdatepicker" th:field="*{endDate}" id="endDate">
+        <div class="input-group-addon">
+            <span class="glyphicon glyphicon-th"></span>
+        </div>
+    </div>
+<!--    <label for="startDate">Start date:</label>-->
+<!--    <input type="text" class="date form-control" th:field="*{startDate}" id="startDate" style="width: 200px" />-->
+<!--    <script type="text/javascript">-->
+<!--        $(".date").datepicker({-->
+<!--            format: "yyyy-mm-dd",-->
+<!--        });-->
+<!--    </script>-->
 
-<!--    <div class="form-group">-->
-<!--        <label for="startDate">Start date:</label>-->
-<!--        <input type="date" th:field="*{startDate}" id="startDate" class="form-control">-->
-<!--    </div>-->
-<!--    <br/>-->
-<!--    <div class="form-group">-->
-<!--        <label for="endDate">End date:</label>-->
-<!--        <input type="date" th:field="*{endDate}" id="endDate" class="form-control">-->
-<!--    </div>-->
-<!--    <label for="startDate">Start date: </label>-->
-<!--    <input type='text' th:field="*{startDate}" id="startDate"/>-->
-<!--    <br/>-->
-<!--    <label for="endDate">End date: </label>-->
-<!--    <input type='text' th:field="*{endDate}" id="endDate"/>-->
+<!--    <label for="endDate">End date:</label>-->
+<!--    <input type="text" class="date form-control" th:field="*{endDate}" id="endDate" style="width: 200px" />-->
+<!--    <script type="text/javascript">-->
+<!--        $(".date").datepicker({-->
+<!--            format: "yyyy-mm-dd",-->
+<!--        });-->
+<!--    </script>-->
+
     <br/>
 <!--    <label for="place">Place: </label>-->
 <!--    <select class="form-control" id="place" name="place">-->

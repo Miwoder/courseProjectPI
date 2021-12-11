@@ -9,7 +9,6 @@ import java.util.Set;
 
 @Getter
 @Setter
-@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -38,7 +37,7 @@ public class Auction {
     @JoinColumn(name="itemId")
     private Item item;
 
-    @ManyToOne (optional=false, cascade=CascadeType.MERGE)
+    @ManyToOne (optional=false)
     @JoinColumn (name="userId")
     private User user;
 

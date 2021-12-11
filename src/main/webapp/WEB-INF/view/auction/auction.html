@@ -68,5 +68,13 @@
     <br>
 </div>
 
+
+<form th:method="PATCH"th:action="@{/auctions/{id}(id=${id})}">
+    <label>Bet: </label>
+    <input type="text" name="bet"/>
+    <br/>
+    <input type="submit" value="Make bet"/>
+</form>
+
 </body>
 </html>
