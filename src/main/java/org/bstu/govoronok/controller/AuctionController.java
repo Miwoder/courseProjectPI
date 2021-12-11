@@ -120,4 +120,10 @@ public class AuctionController {
         model.addAttribute("auctions", auctionService.getAuctionByType("Animals"));
         return "/auction/auctions";
     }
+
+    @GetMapping("/auctions/materials")
+    public String getAuctionsWithMaterials(Model model) {
+        model.addAttribute("auctions", auctionService.getAuctionByType("Materials"));
+        return "/auction/auctions";
+    }
 }
