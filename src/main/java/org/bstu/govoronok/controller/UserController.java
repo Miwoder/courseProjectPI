@@ -92,21 +92,4 @@ public class UserController {
     public String getConfirmAlert() {
         return "/authentication/confirmAlert";
     }
-
-    @PatchMapping("/administration/updateStatuses")
-    public String updateAuctionStatuses() {
-        List<Auction> auctions = auctionService.getAllConfirmedAuctions();
-        for (Auction auction : auctions){
-            if(auction.getStartDate().isAfter(LocalDate.now())){
-                auction.setAuctionStatus(auctionStatusService.getAuctionStatusByName("Starts soon"));
-            }
-            else{
-                auction.setAuctionStatus(auctionStatusService.getAuctionStatusByName("Ongoing"));
-            }
-            auctionService.saveAuction(auction);
-            StatusHistory statusHistory = new StatusHistory(LocalDate.now(), auction.getAuctionStatus(), auction);
-            statusHistoryService.save(statusHistory);
-        }
-        return "redirect:/my";
-    }
 }

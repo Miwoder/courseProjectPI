@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -57,5 +58,22 @@ public class AdministrationController {
         StatusHistory statusHistory = new StatusHistory(LocalDate.now(), auction.getAuctionStatus(), auction);
         statusHistoryService.save(statusHistory);
         return "redirect:/administration";
+    }
+
+    @PatchMapping("/administration/updateStatuses")
+    public String updateAuctionStatuses() {
+        List<Auction> auctions = auctionService.getAllConfirmedAuctions();
+        for (Auction auction : auctions){
+            if(auction.getStartDate().isAfter(LocalDate.now())){
+                auction.setAuctionStatus(auctionStatusService.getAuctionStatusByName("Starts soon"));
+            }
+            else{
+                auction.setAuctionStatus(auctionStatusService.getAuctionStatusByName("Ongoing"));
+            }
+            auctionService.saveAuction(auction);
+            StatusHistory statusHistory = new StatusHistory(LocalDate.now(), auction.getAuctionStatus(), auction);
+            statusHistoryService.save(statusHistory);
+        }
+        return "redirect:/my";
     }
 }
