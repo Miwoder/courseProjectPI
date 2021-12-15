@@ -1,7 +1,10 @@
 package org.bstu.govoronok.model;
 
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -28,11 +31,11 @@ public class StatusHistory {
     @Column(name = "changeDate", nullable = false)
     private LocalDate changeDate;
 
-    @ManyToOne (optional=false, cascade=CascadeType.MERGE)
-    @JoinColumn (name="newStatusId")
+    @ManyToOne(optional = false, cascade = CascadeType.MERGE)
+    @JoinColumn(name = "newStatusId")
     private AuctionStatus auctionStatus;
 
-    @ManyToOne (optional=false, cascade=CascadeType.MERGE)
-    @JoinColumn (name="auctionId")
+    @ManyToOne(optional = false, cascade = CascadeType.MERGE)
+    @JoinColumn(name = "auctionId")
     private Auction auction;
 }

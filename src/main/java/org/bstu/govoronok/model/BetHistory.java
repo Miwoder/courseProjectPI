@@ -1,7 +1,10 @@
 package org.bstu.govoronok.model;
 
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -25,11 +28,11 @@ public class BetHistory {
     private LocalDate winDate;
 
     @OneToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name="userId")
+    @JoinColumn(name = "userId")
     private User user;
 
     @ManyToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name="auctionId")
+    @JoinColumn(name = "auctionId")
     private Auction auction;
 
     public BetHistory(String bet, LocalDate winDate, User user, Auction auction) {

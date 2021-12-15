@@ -1,7 +1,10 @@
 package org.bstu.govoronok.model;
 
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 
@@ -23,12 +26,12 @@ public class Item {
     @Column(name = "description", nullable = false)
     private String description;
 
-    @ManyToOne (optional=false, cascade=CascadeType.MERGE)
-    @JoinColumn (name="user_id")
+    @ManyToOne(optional = false, cascade = CascadeType.MERGE)
+    @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne (optional=false, cascade=CascadeType.MERGE)
-    @JoinColumn (name="type_id")
+    @ManyToOne(optional = false, cascade = CascadeType.MERGE)
+    @JoinColumn(name = "type_id")
     private ItemType itemType;
 
     @OneToOne(mappedBy = "item")

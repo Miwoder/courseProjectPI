@@ -1,8 +1,6 @@
 package org.bstu.govoronok.service;
 
-import org.bstu.govoronok.model.Auction;
 import org.bstu.govoronok.model.ItemType;
-import org.bstu.govoronok.repository.AuctionRepository;
 import org.bstu.govoronok.repository.ItemTypeRepository;
 import org.springframework.stereotype.Service;
 
@@ -16,11 +14,11 @@ public class ItemTypeService {
         this.itemTypeRepository = itemTypeRepository;
     }
 
-    public List<ItemType> getAllItemTypes(){
+    public List<ItemType> getAllItemTypes() {
         return itemTypeRepository.findAll();
     }
 
-    public ItemType getItemTypeByName(String name){
+    public ItemType getItemTypeByName(String name) {
         return itemTypeRepository.getByName(name);
     }
 }

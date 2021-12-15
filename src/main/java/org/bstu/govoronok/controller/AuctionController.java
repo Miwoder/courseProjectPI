@@ -2,17 +2,17 @@ package org.bstu.govoronok.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.bstu.govoronok.model.*;
+import org.bstu.govoronok.model.Auction;
+import org.bstu.govoronok.model.BetHistory;
+import org.bstu.govoronok.model.User;
 import org.bstu.govoronok.service.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.time.LocalDate;
 import java.util.Optional;
-import java.util.UUID;
 
 
 @Controller
@@ -26,7 +26,6 @@ public class AuctionController {
     private final PlaceService placeService;
     private final AuctionStatusService auctionStatusService;
     private final BetHistoryService betHistoryService;
-    private final StatusHistoryService statusHistoryService;
 
     @GetMapping("/auctions/all")
     public String getAllAuctions(Model model) {
@@ -58,15 +57,14 @@ public class AuctionController {
     @GetMapping("/auctions/{id}")
     public String getWonAuctions(Model model, @PathVariable("id") Long auctionId) {
         model.addAttribute("auction", auctionService.getAuctionById(auctionId));
-
         return "/auction/auction";
     }
 
     @PatchMapping("/auctions/{id}")
     public String makeBet(@PathVariable("id") Long auctionId, Principal principal, String bet) {
         Optional<Auction> auction = auctionService.getAuctionById(auctionId);
-        if(Integer.parseInt(auction.get().getHighBet()) < Integer.parseInt(bet) &&
-                auction.get().getAuctionStatus().getName().equals(auctionStatusService.getAuctionStatusByName("Ongoing").getName())){
+        if (Integer.parseInt(auction.get().getHighBet()) < Integer.parseInt(bet) &&
+                auction.get().getAuctionStatus().getName().equals(auctionStatusService.getAuctionStatusByName("Ongoing").getName())) {
             auction.get().setHighBet(bet);
             User user = userService.findByUsername(principal.getName());
             auction.get().setUser(user);

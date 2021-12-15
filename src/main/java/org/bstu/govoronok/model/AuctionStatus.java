@@ -1,6 +1,9 @@
 package org.bstu.govoronok.model;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -20,7 +23,7 @@ public class AuctionStatus {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @OneToMany (mappedBy="auctionStatus", fetch=FetchType.EAGER)
+    @OneToMany(mappedBy = "auctionStatus", fetch = FetchType.EAGER)
     private Set<Auction> auctions;
 
     @OneToMany(mappedBy = "auctionStatus")

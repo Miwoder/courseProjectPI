@@ -1,8 +1,6 @@
 package org.bstu.govoronok.service;
 
-import org.bstu.govoronok.model.ItemType;
 import org.bstu.govoronok.model.Place;
-import org.bstu.govoronok.repository.ItemTypeRepository;
 import org.bstu.govoronok.repository.PlaceRepository;
 import org.springframework.stereotype.Service;
 
@@ -16,11 +14,11 @@ public class PlaceService {
         this.placeRepository = placeRepository;
     }
 
-    public List<Place> getAllPlaces(){
+    public List<Place> getAllPlaces() {
         return placeRepository.findAll();
     }
 
-    public Place getPlaceByName(String name){
+    public Place getPlaceByName(String name) {
         return placeRepository.getPlaceByName(name);
     }
 

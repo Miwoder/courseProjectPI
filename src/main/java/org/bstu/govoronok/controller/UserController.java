@@ -2,20 +2,16 @@ package org.bstu.govoronok.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.bstu.govoronok.model.*;
-import org.bstu.govoronok.service.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import org.bstu.govoronok.model.User;
+import org.bstu.govoronok.service.PaymentService;
+import org.bstu.govoronok.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
-import java.security.Principal;
-import java.time.LocalDate;
-import java.util.List;
 import java.util.UUID;
 
 
@@ -25,9 +21,6 @@ import java.util.UUID;
 public class UserController {
     private final UserService userService;
     private final PaymentService paymentService;
-    private final AuctionService auctionService;
-    private final AuctionStatusService auctionStatusService;
-    private final StatusHistoryService statusHistoryService;
 
     @GetMapping("/signup")
     public String createNewUser(Model model) {
@@ -43,12 +36,12 @@ public class UserController {
     }
 
     @GetMapping("/signin")
-    public String signin(){
+    public String signin() {
         return "/authentication/signin";
     }
 
     @GetMapping("/authentication/forgot_password")
-    public String resetPassword(){
+    public String resetPassword() {
         return "/authentication/resetPassword";
     }
 
@@ -59,15 +52,15 @@ public class UserController {
     }
 
     @GetMapping("/authentication/reset")
-    public String setNewPassword(){
+    public String setNewPassword() {
         return "authentication/newPassword";
     }
 
     @PostMapping("/authentication/reset")
     public String setNewPassword(@ModelAttribute("code") UUID code,
                                  String password, String passwordConfirm) {
-        if(password.equals(passwordConfirm)){
-            userService.setNewPasswordWithCode(code , password);
+        if (password.equals(passwordConfirm)) {
+            userService.setNewPasswordWithCode(code, password);
         }
         return "redirect:/signin";
     }

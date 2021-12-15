@@ -1,6 +1,9 @@
 package org.bstu.govoronok.model;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -34,22 +37,22 @@ public class Auction {
     private LocalDate endDate;
 
     @OneToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name="itemId")
+    @JoinColumn(name = "itemId")
     private Item item;
 
-    @ManyToOne (optional=false)
-    @JoinColumn (name="userId")
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "userId")
     private User user;
 
     @ManyToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name="placeId")
+    @JoinColumn(name = "placeId")
     private Place place;
 
-    @OneToMany (mappedBy="auction", fetch=FetchType.EAGER)
+    @OneToMany(mappedBy = "auction", fetch = FetchType.EAGER)
     private Set<BetHistory> betHistorySet;
 
-    @ManyToOne (optional=false, cascade=CascadeType.MERGE)
-    @JoinColumn (name="statusID")
+    @ManyToOne(optional = false, cascade = CascadeType.MERGE)
+    @JoinColumn(name = "statusID")
     private AuctionStatus auctionStatus;
 
     @OneToMany(mappedBy = "auction")

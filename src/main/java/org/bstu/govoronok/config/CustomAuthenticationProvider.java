@@ -43,21 +43,20 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         User user = userService.findByUsername(username);
         List<Role> roleList = new ArrayList<>();
         roleList.add(user.getRole());
-        if(user != null){
-            if(username.equals(user.getEmail()) && passwordEncoder.matches(password, user.getPassword())
-                    && user.getApproved().equals(Boolean.TRUE)){
+        if (user != null) {
+            if (username.equals(user.getEmail()) && passwordEncoder.matches(password, user.getPassword())
+                    && user.getApproved().equals(Boolean.TRUE)) {
                 usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
-                        new org.springframework.security.core.userdetails.User(username,password, mapRolesToAuthorities(roleList)),
+                        new org.springframework.security.core.userdetails.User(username, password, mapRolesToAuthorities(roleList)),
                         password, mapRolesToAuthorities(roleList));
             }
-        }
-        else{
+        } else {
             throw new UsernameNotFoundException("User " + username + "not found");
         }
         return usernamePasswordAuthenticationToken;
     }
 
-    private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles){
+    private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {
         return roles.stream().map(role -> new SimpleGrantedAuthority(role.getRole())).collect(Collectors.toList());
     }
 

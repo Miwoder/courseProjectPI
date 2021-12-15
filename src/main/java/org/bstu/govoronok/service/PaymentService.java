@@ -15,15 +15,15 @@ public class PaymentService {
         this.paymentRepository = paymentRepository;
     }
 
-    public List<Payment> getAllPayments(){
+    public List<Payment> getAllPayments() {
         return paymentRepository.findAll();
     }
 
-    public Optional<Payment> getPaymentById(Long id){
+    public Optional<Payment> getPaymentById(Long id) {
         return paymentRepository.findById(id);
     }
 
-    public Payment getPaymentByName(String name){
+    public Payment getPaymentByName(String name) {
         return paymentRepository.getPaymentByName(name);
     }
 }

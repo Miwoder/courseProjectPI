@@ -17,7 +17,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private CustomAuthenticationProvider customAuthenticationProvider;
 
     @Autowired
-    public SecurityConfig (UserService userService, PasswordEncoder passwordEncoder, CustomAuthenticationProvider customAuthenticationProvider){
+    public SecurityConfig(UserService userService, PasswordEncoder passwordEncoder,
+                          CustomAuthenticationProvider customAuthenticationProvider) {
         this.passwordEncoder = passwordEncoder;
         this.userService = userService;
         this.customAuthenticationProvider = customAuthenticationProvider;
@@ -29,7 +30,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/administration/**").hasAuthority("ADMINISTRATOR")
-                .antMatchers("/my/**", "/auctions/**","/items/**").authenticated()
+                .antMatchers("/my/**", "/auctions/**", "/items/**").authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/signin").permitAll()
@@ -40,12 +41,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    protected void configure(AuthenticationManagerBuilder authenticationManagerBuilder){
+    protected void configure(AuthenticationManagerBuilder authenticationManagerBuilder) {
         authenticationManagerBuilder.authenticationProvider(customAuthenticationProvider);
     }
 
     @Bean
-    public DaoAuthenticationProvider daoAuthenticationProvider(){
+    public DaoAuthenticationProvider daoAuthenticationProvider() {
         DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
         authenticationProvider.setPasswordEncoder(passwordEncoder);
         authenticationProvider.setUserDetailsService(userService);

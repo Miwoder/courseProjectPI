@@ -15,15 +15,15 @@ public class ItemService {
         this.itemRepository = itemRepository;
     }
 
-    public List<Item> getAllItems(){
+    public List<Item> getAllItems() {
         return itemRepository.findAll();
     }
 
-    public Optional<Item> getItemById(Long id){
+    public Optional<Item> getItemById(Long id) {
         return itemRepository.findById(id);
     }
 
-    public void saveItem(Item item){
+    public void saveItem(Item item) {
         itemRepository.save(item);
     }
 }

@@ -3,18 +3,20 @@ package org.bstu.govoronok.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.bstu.govoronok.model.Auction;
-import org.bstu.govoronok.model.BetHistory;
 import org.bstu.govoronok.model.StatusHistory;
-import org.bstu.govoronok.model.User;
-import org.bstu.govoronok.service.*;
+import org.bstu.govoronok.service.AuctionService;
+import org.bstu.govoronok.service.AuctionStatusService;
+import org.bstu.govoronok.service.StatusHistoryService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.security.Principal;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 
 @Controller
@@ -22,12 +24,8 @@ import java.util.Optional;
 @Slf4j
 public class AdministrationController {
 
-    private final UserService userService;
     private final AuctionService auctionService;
-    private final ItemService itemService;
-    private final PlaceService placeService;
     private final AuctionStatusService auctionStatusService;
-    private final BetHistoryService betHistoryService;
     private final StatusHistoryService statusHistoryService;
 
     @GetMapping("/administration")
@@ -45,13 +43,11 @@ public class AdministrationController {
     @PatchMapping("/administration/{id}")
     public String approveAuction(@PathVariable("id") Long auctionId) {
         Auction auction = auctionService.getAuctionById(auctionId).get();
-        if(auction.getEndDate().isBefore(LocalDate.now())){
+        if (auction.getEndDate().isBefore(LocalDate.now())) {
             auction.setAuctionStatus(auctionStatusService.getAuctionStatusByName("END"));
-        }
-        else if(auction.getStartDate().isAfter(LocalDate.now())){
+        } else if (auction.getStartDate().isAfter(LocalDate.now())) {
             auction.setAuctionStatus(auctionStatusService.getAuctionStatusByName("Starts soon"));
-        }
-        else{
+        } else {
             auction.setAuctionStatus(auctionStatusService.getAuctionStatusByName("Ongoing"));
         }
         auctionService.saveAuction(auction);
@@ -63,11 +59,10 @@ public class AdministrationController {
     @PatchMapping("/administration/updateStatuses")
     public String updateAuctionStatuses() {
         List<Auction> auctions = auctionService.getAllConfirmedAuctions();
-        for (Auction auction : auctions){
-            if(auction.getStartDate().isAfter(LocalDate.now())){
+        for (Auction auction : auctions) {
+            if (auction.getStartDate().isAfter(LocalDate.now())) {
                 auction.setAuctionStatus(auctionStatusService.getAuctionStatusByName("Starts soon"));
-            }
-            else{
+            } else {
                 auction.setAuctionStatus(auctionStatusService.getAuctionStatusByName("Ongoing"));
             }
             auctionService.saveAuction(auction);

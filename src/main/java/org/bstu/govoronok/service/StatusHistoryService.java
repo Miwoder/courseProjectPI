@@ -1,9 +1,7 @@
 package org.bstu.govoronok.service;
 
 import lombok.RequiredArgsConstructor;
-import org.bstu.govoronok.model.BetHistory;
 import org.bstu.govoronok.model.StatusHistory;
-import org.bstu.govoronok.repository.BetHistoryRepository;
 import org.bstu.govoronok.repository.StatusHistoryRepository;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +10,7 @@ import org.springframework.stereotype.Service;
 public class StatusHistoryService {
     private final StatusHistoryRepository statusHistoryRepository;
 
-    public void save(StatusHistory statusHistory){
+    public void save(StatusHistory statusHistory) {
         statusHistoryRepository.save(statusHistory);
     }
 }

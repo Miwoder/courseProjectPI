@@ -2,9 +2,10 @@ package org.bstu.govoronok.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.bstu.govoronok.model.Auction;
 import org.bstu.govoronok.model.Item;
-import org.bstu.govoronok.service.*;
+import org.bstu.govoronok.service.ItemService;
+import org.bstu.govoronok.service.ItemTypeService;
+import org.bstu.govoronok.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,10 +22,7 @@ import java.security.Principal;
 public class ItemController {
 
     private final UserService userService;
-    private final AuctionService auctionService;
-    private final PaymentService paymentService;
     private final ItemTypeService itemTypeService;
-    private final PlaceService placeService;
     private final ItemService itemService;
 
     @GetMapping("/auctions/add/item")
