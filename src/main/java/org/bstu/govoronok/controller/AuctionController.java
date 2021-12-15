@@ -55,13 +55,6 @@ public class AuctionController {
         return "redirect:/auctions/all";
     }
 
-    @GetMapping("/my/won")
-    public String getWonAuctions(Model model, Principal principal) {
-        User user = userService.findByUsername(principal.getName());
-        model.addAttribute("auctions", auctionService.getAllWonAuctionsByUser(user.getId()));
-        return "/auction/wonAuctions";
-    }
-
     @GetMapping("/auctions/{id}")
     public String getWonAuctions(Model model, @PathVariable("id") Long auctionId) {
         model.addAttribute("auction", auctionService.getAuctionById(auctionId));
@@ -82,13 +75,6 @@ public class AuctionController {
             betHistoryService.save(betHistory);
         }
         return "redirect:/auctions/{id}";
-    }
-
-    @GetMapping("/my/auctions")
-    public String getMyAuctions(Model model, Principal principal) {
-        User user = userService.findByUsername(principal.getName());
-        model.addAttribute("auctions", auctionService.getAllAuctionsByUser(user.getId()));
-        return "/auction/auctions";
     }
 
     @GetMapping("/auctions/cars")

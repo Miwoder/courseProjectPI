@@ -93,18 +93,6 @@ public class UserController {
         return "/authentication/confirmAlert";
     }
 
-    @GetMapping("/my")
-    public String getMyPage(Model model, Principal principal) {
-        User user = userService.findByUsername(principal.getName());
-        model.addAttribute( "user", user);
-        if(user.getRole().equals(Role.USER)){
-            return "user/myPage";
-        }
-        else{
-            return "user/myPageAdmin";
-        }
-    }
-
     @PatchMapping("/administration/updateStatuses")
     public String updateAuctionStatuses() {
         List<Auction> auctions = auctionService.getAllConfirmedAuctions();
