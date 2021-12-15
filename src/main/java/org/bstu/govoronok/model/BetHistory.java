@@ -24,11 +24,18 @@ public class BetHistory {
     @Column(name = "winDate", nullable = false)
     private LocalDate winDate;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name="userId")
     private User user;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name="auctionId")
     private Auction auction;
+
+    public BetHistory(String bet, LocalDate winDate, User user, Auction auction) {
+        this.bet = bet;
+        this.winDate = winDate;
+        this.user = user;
+        this.auction = auction;
+    }
 }
