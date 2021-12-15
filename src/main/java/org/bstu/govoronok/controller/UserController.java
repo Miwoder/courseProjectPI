@@ -3,10 +3,7 @@ package org.bstu.govoronok.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.bstu.govoronok.model.*;
-import org.bstu.govoronok.service.AuctionService;
-import org.bstu.govoronok.service.AuctionStatusService;
-import org.bstu.govoronok.service.PaymentService;
-import org.bstu.govoronok.service.UserService;
+import org.bstu.govoronok.service.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +27,7 @@ public class UserController {
     private final PaymentService paymentService;
     private final AuctionService auctionService;
     private final AuctionStatusService auctionStatusService;
+    private final StatusHistoryService statusHistoryService;
 
     @GetMapping("/")
     public String redirectToHome(){
@@ -65,7 +63,7 @@ public class UserController {
     }
 
     @PostMapping("/authentication/forgot_password")
-    public String resetPassword(Model model, @ModelAttribute("username") String username) {
+    public String resetPassword(@ModelAttribute("username") String username) {
         userService.resetPasswordForUserByEmail(username);
         return "redirect:/authentication/confirmAlert";
     }
@@ -118,6 +116,8 @@ public class UserController {
                 auction.setAuctionStatus(auctionStatusService.getAuctionStatusByName("Ongoing"));
             }
             auctionService.saveAuction(auction);
+            StatusHistory statusHistory = new StatusHistory(LocalDate.now(), auction.getAuctionStatus(), auction);
+            statusHistoryService.save(statusHistory);
         }
         return "redirect:/my";
     }

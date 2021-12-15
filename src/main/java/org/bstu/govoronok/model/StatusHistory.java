@@ -13,6 +13,13 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "StatusHistory")
 public class StatusHistory {
+
+    public StatusHistory(LocalDate changeDate, AuctionStatus auctionStatus, Auction auction) {
+        this.changeDate = changeDate;
+        this.auctionStatus = auctionStatus;
+        this.auction = auction;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
@@ -21,11 +28,11 @@ public class StatusHistory {
     @Column(name = "changeDate", nullable = false)
     private LocalDate changeDate;
 
-    @ManyToOne (optional=false, cascade=CascadeType.ALL)
+    @ManyToOne (optional=false, cascade=CascadeType.MERGE)
     @JoinColumn (name="newStatusId")
-    private StatusHistory statusHistory;
+    private AuctionStatus auctionStatus;
 
-    @ManyToOne (optional=false, cascade=CascadeType.ALL)
+    @ManyToOne (optional=false, cascade=CascadeType.MERGE)
     @JoinColumn (name="auctionId")
     private Auction auction;
 }

@@ -26,6 +26,7 @@ public class AuctionController {
     private final PlaceService placeService;
     private final AuctionStatusService auctionStatusService;
     private final BetHistoryService betHistoryService;
+    private final StatusHistoryService statusHistoryService;
 
     @GetMapping("/auctions/all")
     public String getAllAuctions(Model model) {
@@ -79,6 +80,8 @@ public class AuctionController {
             auction.setAuctionStatus(auctionStatusService.getAuctionStatusByName("Ongoing"));
         }
         auctionService.saveAuction(auction);
+        StatusHistory statusHistory = new StatusHistory(LocalDate.now(), auction.getAuctionStatus(), auction);
+        statusHistoryService.save(statusHistory);
         return "redirect:/administration";
     }
 

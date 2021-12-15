@@ -23,6 +23,6 @@ public class AuctionStatus {
     @OneToMany (mappedBy="auctionStatus", fetch=FetchType.EAGER)
     private Set<Auction> auctions;
 
-    @OneToMany(mappedBy = "statusHistory")
+    @OneToMany(mappedBy = "auctionStatus")
     private Set<StatusHistory> statusHistories;
 }
