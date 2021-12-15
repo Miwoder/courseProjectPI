@@ -27,7 +27,7 @@ public class BetHistory {
     @Column(name = "winDate", nullable = false)
     private LocalDate winDate;
 
-    @OneToOne(cascade = CascadeType.MERGE)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "userId")
     private User user;
 

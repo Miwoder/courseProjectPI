@@ -52,6 +52,6 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     private Set<Auction> auctions;
 
-    @OneToOne(mappedBy = "user", cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
-    private BetHistory betHistory;
+    @OneToMany(mappedBy = "user", cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
+    private Set<BetHistory> betHistorySet;
 }
