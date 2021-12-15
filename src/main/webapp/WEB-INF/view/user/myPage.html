@@ -73,7 +73,9 @@
     <br>
     <label for="payment">Preferred payment method:</label>
     <span id="payment" th:text="${user.getPayment().getName()}"></span>
-    <br>
+    <form th:method="PATCH" th:action="@{/my}">
+        <input type="submit" value="Change to another method"/>
+    </form>
 </div>
 
 </body>

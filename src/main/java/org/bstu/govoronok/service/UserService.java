@@ -38,6 +38,10 @@ public class UserService implements UserDetailsService {
         }
     }
 
+    public void updateUser(User user){
+        userRepository.save(user);
+    }
+
     public void confirmUser(UUID code) {
         try (Jedis jedis = jedisPool.getResource()) {
             String email = jedis.get(code.toString());
