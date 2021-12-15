@@ -21,6 +21,6 @@ public class Payment {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @OneToOne(mappedBy = "payment")
-    private User user;
+    @OneToMany(mappedBy = "payment", cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
+    private Set<User> users;
 }

@@ -3,7 +3,6 @@ package org.bstu.govoronok.model;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -40,8 +39,8 @@ public class User {
     @Column(name = "phone", nullable = false)
     private String phone;
 
-    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
-    @JoinColumn(name="payment_id")
+    @ManyToOne (optional=false)
+    @JoinColumn (name="payment_id")
     private Payment payment;
 
     @OneToMany (mappedBy="user", cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})

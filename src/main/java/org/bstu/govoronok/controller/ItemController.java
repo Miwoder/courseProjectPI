@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
 
@@ -29,19 +30,17 @@ public class ItemController {
     @GetMapping("/auctions/add/item")
     public String getFormForNewItem(Model model) {
         model.addAttribute("item", new Item());
-        String itemTypeName = "Cars";
-        model.addAttribute("itemTypeName", itemTypeName);
         model.addAttribute("itemTypes", itemTypeService.getAllItemTypes());
         return "/item/addNewItem";
     }
 
     @PostMapping("/auctions/add/item")
-    public String addNewItem(@ModelAttribute("item") Item item, Principal principal, Model model) {
-        item.setItemType(itemTypeService.getItemTypeByName("Cars"));
+    public String addNewItem(@RequestParam("itemTypeName") String itemTypeName,
+                             @ModelAttribute("item") Item item, Principal principal) {
         item.setUser(userService.findByUsername(principal.getName()));
+        item.setItemType(itemTypeService.getItemTypeByName(itemTypeName));
         itemService.saveItem(item);
-        model.addAttribute("item", item);
-        return "redirect:/auctions/add/auction";
+        return "redirect:/items/" + item.getId() + "/auction/add";
     }
 
 }

@@ -12,7 +12,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.js"></script>
 
     <script th:src="@{/static/js/functions.js}"></script>
-    <title>My page</title>
+    <title>Add new auction</title>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-info">
@@ -45,12 +45,27 @@
                     <a class="dropdown-item" href="/auctions/materials">Auctions for materials</a>
                 </div>
             </li>
+            <li>
+                <div class="dropdown show">
+                    <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Dropdown link
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                        <a class="dropdown-item" href="/auctions/all">All auctions</a>
+                        <a class="dropdown-item" href="/auctions/cars">Auctions for cars</a>
+                        <a class="dropdown-item" href="/auctions/houses">Auctions for houses</a>
+                        <a class="dropdown-item" href="/auctions/animals">Auctions for animals</a>
+                        <a class="dropdown-item" href="/auctions/furniture">Auctions for furniture</a>
+                        <a class="dropdown-item" href="/auctions/materials">Auctions for materials</a>
+                    </div>
+                </div>
+            </li>
         </ul>
     </div>
 </nav>
 
 
-<form method="POST" th:object="${auction}" th:action="@{/auctions/add/auction}">
+<form method="POST" th:object="${auction}" th:action="@{/items/{itemId}/auction/add(itemId=${itemId})}">
     <label for="startBet">Start bet: </label>
     <input type='text' th:field="*{startBet}" id="startBet"/>
     <br/>
@@ -72,30 +87,14 @@
             <span class="glyphicon glyphicon-th"></span>
         </div>
     </div>
-<!--    <label for="startDate">Start date:</label>-->
-<!--    <input type="text" class="date form-control" th:field="*{startDate}" id="startDate" style="width: 200px" />-->
-<!--    <script type="text/javascript">-->
-<!--        $(".date").datepicker({-->
-<!--            format: "yyyy-mm-dd",-->
-<!--        });-->
-<!--    </script>-->
-
-<!--    <label for="endDate">End date:</label>-->
-<!--    <input type="text" class="date form-control" th:field="*{endDate}" id="endDate" style="width: 200px" />-->
-<!--    <script type="text/javascript">-->
-<!--        $(".date").datepicker({-->
-<!--            format: "yyyy-mm-dd",-->
-<!--        });-->
-<!--    </script>-->
-
-    <br/>
-<!--    <label for="place">Place: </label>-->
-<!--    <select class="form-control" id="place" name="place">-->
-<!--        <option value="">Select place</option>-->
-<!--        <option th:each="place : ${places}"-->
-<!--                th:value="${placeName}"-->
-<!--                th:text="${place.name}"></option>-->
-<!--    </select>-->
+    <br>
+    <label for="place">Place: </label>
+    <select class="form-control" id="place" name="placeName">
+        <div th:each="place : ${places}">
+            <option th:value="${place.name}"
+                    th:text="${place.name}"></option>
+        </div>
+    </select>
     <input type="submit" value="Create new auction"/>
 </form>
 

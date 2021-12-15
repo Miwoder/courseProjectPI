@@ -1,12 +1,11 @@
 package org.bstu.govoronok.service;
 
 import org.bstu.govoronok.model.Item;
-import org.bstu.govoronok.model.ItemType;
 import org.bstu.govoronok.repository.ItemRepository;
-import org.bstu.govoronok.repository.ItemTypeRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ItemService {
@@ -18,6 +17,10 @@ public class ItemService {
 
     public List<Item> getAllItems(){
         return itemRepository.findAll();
+    }
+
+    public Optional<Item> getItemById(Long id){
+        return itemRepository.findById(id);
     }
 
     public void saveItem(Item item){

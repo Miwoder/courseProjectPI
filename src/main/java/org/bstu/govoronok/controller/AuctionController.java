@@ -22,10 +22,10 @@ public class AuctionController {
 
     private final UserService userService;
     private final AuctionService auctionService;
-    private final PaymentService paymentService;
-    private final ItemTypeService itemTypeService;
+    private final ItemService itemService;
     private final PlaceService placeService;
     private final AuctionStatusService auctionStatusService;
+    private final BetHistoryService betHistoryService;
 
     @GetMapping("/auctions/all")
     public String getAllAuctions(Model model) {
@@ -33,16 +33,20 @@ public class AuctionController {
         return "/auction/auctions";
     }
 
-    @GetMapping("/auctions/add/auction")
-    public String getFormForNewAuction(Model model) {
+    @GetMapping("/items/{itemId}/auction/add")
+    public String getFormForNewAuction(Model model, @PathVariable("itemId") Long itemId) {
+        model.addAttribute("itemId", itemId);
         model.addAttribute("auction", new Auction());
+        model.addAttribute("places", placeService.getAllPlaces());
         return "/auction/addNewAuction";
     }
 
-    @PostMapping("/auctions/add/auction")
-    public String addNewAuction(Model model, @ModelAttribute("auction") Auction auction, Principal principal) {
-        auction.setItem((Item) model.getAttribute("item"));
-        auction.setPlace(placeService.getPlaceByName("NY Auctions"));
+    @PostMapping("/items/{itemId}/auction/add")
+    public String addNewAuction(@PathVariable("itemId") Long itemId,
+                                @RequestParam("placeName") String placeName,
+                                @ModelAttribute("auction") Auction auction, Principal principal) {
+        auction.setItem(itemService.getItemById(itemId).get());
+        auction.setPlace(placeService.getPlaceByName(placeName));
         auction.setHighBet(auction.getStartBet());
         auction.setUser(userService.findByUsername(principal.getName()));
         auction.setAuctionStatus(auctionStatusService.getAuctionStatusByName("Unconfirmed"));
@@ -96,11 +100,13 @@ public class AuctionController {
     public String makeBet(@PathVariable("id") Long auctionId, Principal principal, String bet) {
         Optional<Auction> auction = auctionService.getAuctionById(auctionId);
         if(Integer.parseInt(auction.get().getHighBet()) < Integer.parseInt(bet) &&
-                auction.get().getAuctionStatus().getName().equals(auctionStatusService.getAuctionStatusByName("Ongoing"))){
+                auction.get().getAuctionStatus().getName().equals(auctionStatusService.getAuctionStatusByName("Ongoing").getName())){
             auction.get().setHighBet(bet);
             User user = userService.findByUsername(principal.getName());
             auction.get().setUser(user);
             auctionService.saveAuction(auction.get());
+            BetHistory betHistory = new BetHistory(bet, LocalDate.now(), user, auction.get());
+            betHistoryService.save(betHistory);
         }
         return "redirect:/auctions/{id}";
     }

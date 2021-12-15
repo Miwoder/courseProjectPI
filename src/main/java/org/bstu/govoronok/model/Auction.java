@@ -54,7 +54,4 @@ public class Auction {
 
     @OneToMany(mappedBy = "auction")
     private Set<StatusHistory> statusHistories;
-
-
-
 }

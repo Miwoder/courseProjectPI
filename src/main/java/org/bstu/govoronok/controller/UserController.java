@@ -26,7 +26,6 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @Slf4j
 public class UserController {
-
     private final UserService userService;
     private final PaymentService paymentService;
     private final AuctionService auctionService;
