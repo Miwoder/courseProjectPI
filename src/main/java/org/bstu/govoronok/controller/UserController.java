@@ -29,16 +29,6 @@ public class UserController {
     private final AuctionStatusService auctionStatusService;
     private final StatusHistoryService statusHistoryService;
 
-    @GetMapping("/")
-    public String redirectToHome(){
-        return "redirect:/home";
-    }
-
-    @GetMapping("/home")
-    public String getHomePage(){
-        return "home/home";
-    }
-
     @GetMapping("/signup")
     public String createNewUser(Model model) {
         model.addAttribute("user", new User());
