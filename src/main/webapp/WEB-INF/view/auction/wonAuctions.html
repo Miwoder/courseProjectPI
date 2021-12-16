@@ -54,30 +54,32 @@
         </ul>
     </div>
 </nav>
-
-
-
-<div th:each="auction: ${auctions}">
-    <h3 th:text="Auction + ${auction.getId()}"></h3>
-    <label for="itemName">Item:</label>
-    <span id="itemName" th:text="${auction.getItem().getName()}"></span>
-    <br>
-    <label for="startDate">Start:</label>
-    <span id="startDate" th:text="${auction.getStartDate()}"></span>
-    <br>
-    <label for="endDate">Ends:</label>
-    <span id="endDate" th:text="${auction.getEndDate()}"></span>
-    <br>
-    <label for="highBet">High bet:</label>
-    <span id="highBet" th:text="${auction.getHighBet()}"></span>
-    <br>
-    <label for="place">Place name:</label>
-    <span id="place" th:text="${auction.getPlace().getName()}"></span>
-    <br>
-    <form th:method="GET" th:action="@{/auctions/{id}(id=${auction.getId()})}">
-        <input type="submit" value="Auction info"/>
-    </form>
+<div class="container">
+    <div class="row">
+        <div class="card" style="width: 18rem;" th:each="auction: ${auctions}">
+            <div class="card-body">
+                <h5 class="card-title" th:text="Auction + ${auction.getId()}"></h5>
+                <label for="itemName">Item:</label>
+                <span id="itemName" th:text="${auction.getItem().getName()}"></span>
+                <br>
+                <label for="startDate">Start:</label>
+                <span id="startDate" th:text="${auction.getStartDate()}"></span>
+                <br>
+                <label for="endDate">Ends:</label>
+                <span id="endDate" th:text="${auction.getEndDate()}"></span>
+                <br>
+                <label for="highBet">High bet:</label>
+                <span id="highBet" th:text="${auction.getHighBet()}+'$'"></span>
+                <br>
+                <label for="place">Place name:</label>
+                <span id="place" th:text="${auction.getPlace().getName()}"></span>
+                <br>
+                <form th:method="GET" th:action="@{/auctions/{id}(id=${auction.getId()})}">
+                    <input class="btn btn-primary" type="submit" value="Auction info"/>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
-
 </body>
 </html>

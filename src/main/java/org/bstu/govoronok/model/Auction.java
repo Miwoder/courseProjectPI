@@ -7,6 +7,7 @@ import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
 import java.util.Set;
 
@@ -23,6 +24,7 @@ public class Auction {
     private Long id;
 
     @Column(name = "startBet", nullable = false)
+    @NotBlank(message = "Start bet can't be empty")
     private String startBet;
 
     @Column(name = "highBet", nullable = false)

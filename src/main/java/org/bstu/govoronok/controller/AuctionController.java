@@ -8,8 +8,10 @@ import org.bstu.govoronok.model.User;
 import org.bstu.govoronok.service.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.security.Principal;
 import java.time.LocalDate;
 import java.util.Optional;
@@ -35,16 +37,19 @@ public class AuctionController {
 
     @GetMapping("/items/{itemId}/auction/add")
     public String getFormForNewAuction(Model model, @PathVariable("itemId") Long itemId) {
-        model.addAttribute("itemId", itemId);
         model.addAttribute("auction", new Auction());
         model.addAttribute("places", placeService.getAllPlaces());
         return "/auction/addNewAuction";
     }
 
     @PostMapping("/items/{itemId}/auction/add")
-    public String addNewAuction(@PathVariable("itemId") Long itemId,
+        public String addNewAuction(@PathVariable("itemId") Long itemId, Model model,
                                 @RequestParam("placeName") String placeName,
-                                @ModelAttribute("auction") Auction auction, Principal principal) {
+                                @Valid Auction auction, Errors errors, Principal principal) {
+        if(errors.hasErrors()){
+            model.addAttribute("places", placeService.getAllPlaces());
+            return "/auction/addNewAuction";
+        }
         auction.setItem(itemService.getItemById(itemId).get());
         auction.setPlace(placeService.getPlaceByName(placeName));
         auction.setHighBet(auction.getStartBet());

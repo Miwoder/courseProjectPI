@@ -1,5 +1,6 @@
 package org.bstu.govoronok.controller;
 
+import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.bstu.govoronok.model.Item;
@@ -8,6 +9,7 @@ import org.bstu.govoronok.service.ItemTypeService;
 import org.bstu.govoronok.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,7 +36,11 @@ public class ItemController {
 
     @PostMapping("/auctions/add/item")
     public String addNewItem(@RequestParam("itemTypeName") String itemTypeName,
-                             @ModelAttribute("item") Item item, Principal principal) {
+                             @Valid Item item, Errors errors, Principal principal, Model model) {
+        if(errors.hasErrors()){
+            model.addAttribute("itemTypes", itemTypeService.getAllItemTypes());
+            return "/item/addNewItem";
+        }
         item.setUser(userService.findByUsername(principal.getName()));
         item.setItemType(itemTypeService.getItemTypeByName(itemTypeName));
         itemService.saveItem(item);

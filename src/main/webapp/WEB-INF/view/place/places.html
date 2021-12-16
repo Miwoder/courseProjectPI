@@ -54,24 +54,43 @@
         </ul>
     </div>
 </nav>
-
-
-
-<div th:each="place: ${places}">
-    <h3 th:text="Place + ${place.getId()}"></h3>
-    <label for="itemName">Name:</label>
-    <span id="itemName" th:text="${place.getName()}"></span>
-    <br>
-    <label for="endDate">Country:</label>
-    <span id="endDate" th:text="${place.getCountry()}"></span>
-    <br>
-    <label for="highBet">City:</label>
-    <span id="highBet" th:text="${place.getCity()}"></span>
-    <br>
-    <label for="startDate">Address:</label>
-    <span id="startDate" th:text="${place.getAddress()}"></span>
-    <br>
+<div class="container">
+    <div class="row">
+        <div class="card" style="width: 18rem;" th:each="place: ${places}">
+            <div class="card-body">
+                <h5 class="card-title" th:text="Place + ${place.getId()}"></h5>
+                <label for="itemName">Name:</label>
+                <span id="itemName" th:text="${place.getName()}"></span>
+                <br>
+                <label for="endDate">Country:</label>
+                <span id="endDate" th:text="${place.getCountry()}"></span>
+                <br>
+                <label for="highBet">City:</label>
+                <span id="highBet" th:text="${place.getCity()}"></span>
+                <br>
+                <label for="startDate">Address:</label>
+                <span id="startDate" th:text="${place.getAddress()}"></span>
+            </div>
+        </div>
+    </div>
 </div>
+
+
+<!--<div th:each="place: ${places}">-->
+<!--    <h3 th:text="Place + ${place.getId()}"></h3>-->
+<!--    <label for="itemName">Name:</label>-->
+<!--    <span id="itemName" th:text="${place.getName()}"></span>-->
+<!--    <br>-->
+<!--    <label for="endDate">Country:</label>-->
+<!--    <span id="endDate" th:text="${place.getCountry()}"></span>-->
+<!--    <br>-->
+<!--    <label for="highBet">City:</label>-->
+<!--    <span id="highBet" th:text="${place.getCity()}"></span>-->
+<!--    <br>-->
+<!--    <label for="startDate">Address:</label>-->
+<!--    <span id="startDate" th:text="${place.getAddress()}"></span>-->
+<!--    <br>-->
+<!--</div>-->
 
 </body>
 </html>
