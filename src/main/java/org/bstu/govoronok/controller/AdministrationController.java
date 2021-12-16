@@ -25,11 +25,9 @@ import java.util.List;
 public class AdministrationController {
 
     private final AuctionService auctionService;
-    private final AuctionStatusService auctionStatusService;
-    private final StatusHistoryService statusHistoryService;
 
     @GetMapping("/administration")
-    public String getAdminPage(Model model, Principal principal) {
+    public String getAdminPage(Model model) {
         model.addAttribute("auctions", auctionService.getAllUnconfirmedAuctions());
         return "/auction/unconfirmedAuctions";
     }
@@ -42,33 +40,13 @@ public class AdministrationController {
 
     @PatchMapping("/administration/{id}")
     public String approveAuction(@PathVariable("id") Long auctionId) {
-        Auction auction = auctionService.getAuctionById(auctionId).get();
-        if (auction.getEndDate().isBefore(LocalDate.now())) {
-            auction.setAuctionStatus(auctionStatusService.getAuctionStatusByName("END"));
-        } else if (auction.getStartDate().isAfter(LocalDate.now())) {
-            auction.setAuctionStatus(auctionStatusService.getAuctionStatusByName("Starts soon"));
-        } else {
-            auction.setAuctionStatus(auctionStatusService.getAuctionStatusByName("Ongoing"));
-        }
-        auctionService.saveAuction(auction);
-        StatusHistory statusHistory = new StatusHistory(LocalDate.now(), auction.getAuctionStatus(), auction);
-        statusHistoryService.save(statusHistory);
+        auctionService.updateAuctionStatus(auctionId);
         return "redirect:/administration";
     }
 
     @PatchMapping("/administration/updateStatuses")
     public String updateAuctionStatuses() {
-        List<Auction> auctions = auctionService.getAllConfirmedAuctions();
-        for (Auction auction : auctions) {
-            if (auction.getStartDate().isAfter(LocalDate.now())) {
-                auction.setAuctionStatus(auctionStatusService.getAuctionStatusByName("Starts soon"));
-            } else {
-                auction.setAuctionStatus(auctionStatusService.getAuctionStatusByName("Ongoing"));
-            }
-            auctionService.saveAuction(auction);
-            StatusHistory statusHistory = new StatusHistory(LocalDate.now(), auction.getAuctionStatus(), auction);
-            statusHistoryService.save(statusHistory);
-        }
+        auctionService.updateAuctionsStatuses();
         return "redirect:/my";
     }
 }
