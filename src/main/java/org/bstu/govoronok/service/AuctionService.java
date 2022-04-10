@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.bstu.govoronok.model.Auction;
 import org.bstu.govoronok.model.StatusHistory;
 import org.bstu.govoronok.repository.AuctionRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -13,6 +15,9 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class AuctionService {
+
+    Logger logger = LoggerFactory.getLogger(AuctionService.class);
+
     private final AuctionRepository auctionRepository;
     private final AuctionStatusService auctionStatusService;
     private final StatusHistoryService statusHistoryService;
@@ -56,7 +61,7 @@ public class AuctionService {
                 "END", "Unconfirmed");
     }
 
-    public void updateAuctionsStatuses(){
+    public void updateAuctionsStatuses() {
         List<Auction> auctions = getAllConfirmedAuctions();
         for (Auction auction : auctions) {
             if (auction.getStartDate().isAfter(LocalDate.now())) {
@@ -68,9 +73,10 @@ public class AuctionService {
             StatusHistory statusHistory = new StatusHistory(LocalDate.now(), auction.getAuctionStatus(), auction);
             statusHistoryService.save(statusHistory);
         }
+        logger.info("Auction statuses updated");
     }
 
-    public void updateAuctionStatus(Long auctionId){
+    public void updateAuctionStatus(Long auctionId) {
         Auction auction = getAuctionById(auctionId).get();
         if (auction.getEndDate().isBefore(LocalDate.now())) {
             auction.setAuctionStatus(auctionStatusService.getAuctionStatusByName("END"));
@@ -82,5 +88,6 @@ public class AuctionService {
         saveAuction(auction);
         StatusHistory statusHistory = new StatusHistory(LocalDate.now(), auction.getAuctionStatus(), auction);
         statusHistoryService.save(statusHistory);
+        logger.info("Auction statuses updated");
     }
 }

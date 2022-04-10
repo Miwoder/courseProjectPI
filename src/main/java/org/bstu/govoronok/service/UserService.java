@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.bstu.govoronok.model.Role;
 import org.bstu.govoronok.model.User;
 import org.bstu.govoronok.repository.UserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.core.GrantedAuthority;
@@ -22,6 +24,9 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class UserService implements UserDetailsService {
+
+    Logger logger = LoggerFactory.getLogger(UserService.class);
+
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JavaMailSender emailSender;
@@ -50,13 +55,15 @@ public class UserService implements UserDetailsService {
                 user.setApproved(Boolean.TRUE);
                 userRepository.save(user);
                 jedis.del(code.toString());
+                logger.info("User confirmed");
             } else {
-                System.out.println("USER NOT FOUND");
+                logger.error("User not found");
             }
         }
     }
 
     public void resetPasswordForUserByEmail(String email) {
+        logger.info("Attempt to reset password by email: {}", email);
         UUID code = UUID.randomUUID();
         try (Jedis jedis = jedisPool.getResource()) {
             jedis.set(code.toString(), email);
@@ -66,6 +73,7 @@ public class UserService implements UserDetailsService {
     }
 
     public void setNewPasswordWithCode(UUID code, String password) {
+        logger.info("Attempt to set new password");
         try (Jedis jedis = jedisPool.getResource()) {
             String email = jedis.get(code.toString());
             User user = findByUsername(email);
@@ -74,7 +82,7 @@ public class UserService implements UserDetailsService {
                 userRepository.save(user);
                 jedis.del(code.toString());
             } else {
-                System.out.println("USER NOT FOUND");
+                logger.error("User not found");
             }
         }
     }
@@ -86,12 +94,12 @@ public class UserService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = findByUsername(email);
-        if (user == null) {
-            throw new UsernameNotFoundException(String.format("User with email '%s' not found", email));
-        }
         List<Role> roleList = new ArrayList<>();
-        roleList.add(user.getRole());
-
+        if (user == null) {
+            logger.error("User with email {} not found", email);
+        } else {
+            roleList.add(user.getRole());
+        }
         return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), mapRolesToAuthorities(roleList));
     }
 
@@ -100,6 +108,7 @@ public class UserService implements UserDetailsService {
     }
 
     public void sendConfirmMessageToUserByEmail(String email, UUID code) {
+        logger.info("Sending email confirm message to {}", email);
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom("hovor007@gmail.com");
         message.setTo(email);
@@ -110,6 +119,7 @@ public class UserService implements UserDetailsService {
     }
 
     public void sendMessageForResetPasswordToUserByEmail(String email, UUID code) {
+        logger.info("Sending email reset password message");
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom("hovor007@gmail.com");
         message.setTo(email);
