@@ -43,10 +43,10 @@ public class AuctionController {
     }
 
     @PostMapping("/items/{itemId}/auction/add")
-        public String addNewAuction(@PathVariable("itemId") Long itemId, Model model,
+    public String addNewAuction(@PathVariable("itemId") Long itemId, Model model,
                                 @RequestParam("placeName") String placeName,
                                 @Valid Auction auction, Errors errors, Principal principal) {
-        if(errors.hasErrors()){
+        if (errors.hasErrors()) {
             model.addAttribute("places", placeService.getAllPlaces());
             return "/auction/addNewAuction";
         }
@@ -107,6 +107,66 @@ public class AuctionController {
     @GetMapping("/auctions/materials")
     public String getAuctionsWithMaterials(Model model) {
         model.addAttribute("auctions", auctionService.getAuctionByType("Materials"));
+        return "/auction/auctions";
+    }
+
+    @GetMapping("/auctions/ssd")
+    public String getAuctionsWithSSD(Model model) {
+        model.addAttribute("auctions", auctionService.getAuctionByType("SSD"));
+        return "/auction/auctions";
+    }
+
+    @GetMapping("/auctions/power_supplies")
+    public String getAuctionsWithPowerSupplies(Model model) {
+        model.addAttribute("auctions", auctionService.getAuctionByType("Power supplie"));
+        return "/auction/auctions";
+    }
+
+    @GetMapping("/auctions/video_cards")
+    public String getAuctionsWithVideoCards(Model model) {
+        model.addAttribute("auctions", auctionService.getAuctionByType("Video card"));
+        return "/auction/auctions";
+    }
+
+    @GetMapping("/auctions/hard_disks")
+    public String getAuctionsWithHardDisks(Model model) {
+        model.addAttribute("auctions", auctionService.getAuctionByType("Hard disk"));
+        return "/auction/auctions";
+    }
+
+    @GetMapping("/auctions/sound_cards")
+    public String getAuctionsWithSoundCards(Model model) {
+        model.addAttribute("auctions", auctionService.getAuctionByType("Sound card"));
+        return "/auction/auctions";
+    }
+
+    @GetMapping("/auctions/corps")
+    public String getAuctionsWithCorps(Model model) {
+        model.addAttribute("auctions", auctionService.getAuctionByType("Corp"));
+        return "/auction/auctions";
+    }
+
+    @GetMapping("/auctions/motherboards")
+    public String getAuctionsWithMotherboards(Model model) {
+        model.addAttribute("auctions", auctionService.getAuctionByType("Motherboard"));
+        return "/auction/auctions";
+    }
+
+    @GetMapping("/auctions/ram")
+    public String getAuctionsWithRam(Model model) {
+        model.addAttribute("auctions", auctionService.getAuctionByType("RAM"));
+        return "/auction/auctions";
+    }
+
+    @GetMapping("/auctions/optical_drive")
+    public String getAuctionsWithOpticalDrive(Model model) {
+        model.addAttribute("auctions", auctionService.getAuctionByType("Optical drive"));
+        return "/auction/auctions";
+    }
+
+    @GetMapping("/auctions/processors")
+    public String getAuctionsWithProcessors(Model model) {
+        model.addAttribute("auctions", auctionService.getAuctionByType("Processor"));
         return "/auction/auctions";
     }
 }
