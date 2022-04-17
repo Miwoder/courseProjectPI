@@ -1,6 +1,7 @@
 package org.bstu.govoronok.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.val;
 import org.bstu.govoronok.model.Role;
 import org.bstu.govoronok.model.User;
 import org.bstu.govoronok.repository.UserRepository;
@@ -18,6 +19,8 @@ import org.springframework.stereotype.Service;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
+import java.math.BigDecimal;
+import java.security.Principal;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -32,6 +35,11 @@ public class UserService implements UserDetailsService {
     private final JavaMailSender emailSender;
     private final JedisPool jedisPool;
 
+    public User getUserById(Long id) {
+        Optional<User> userById = Optional.ofNullable(userRepository.getUserById(id));
+        return userById.orElse(null);
+    }
+
     public void addNewUser(User user) {
         UUID code = UUID.randomUUID();
         try (Jedis jedis = jedisPool.getResource()) {
@@ -43,7 +51,7 @@ public class UserService implements UserDetailsService {
         }
     }
 
-    public void updateUser(User user){
+    public void updateUser(User user) {
         userRepository.save(user);
     }
 
@@ -131,4 +139,9 @@ public class UserService implements UserDetailsService {
         emailSender.send(message);
     }
 
+    public void deposit(BigDecimal amount, Principal principal) {
+        User user = userRepository.getUserByEmail(principal.getName());
+        user.setBalance(user.getBalance().add(amount));
+        userRepository.save(user);
+    }
 }

@@ -6,15 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker.css"
-          rel="stylesheet"/>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.js"></script>
-
-    <script th:src="@{/static/js/functions.js}"></script>
-    <title>Add new auction</title>
+    <title>Deposit</title>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-info">
@@ -66,46 +58,42 @@
         </ul>
     </div>
 </nav>
-<div class="container">
+
+<div class="container" style="font-size: x-large; height: 400px; width: 300px; position: absolute; left: 0;
+        right: 0; top: 0; bottom: 0; margin: auto; max-width: 100%; max-height: 100%; overflow: auto;">
     <aside class="col-sm-4">
-        <form method="POST" th:object="${auction}" th:action="@{/items/{itemId}/auction/add(itemId=${itemId})}">
-            <div class="col-xs-4">
-                <label for="startBet" class="form-label">Start bet: </label>
-                <input type='text' class="form-control" th:field="*{startBet}" id="startBet"/>
-                <div style="color: red" th:if="${#fields.hasErrors('startBet')}" th:errors="*{startBet}">Start bet incorrect</div>
-            </div>
-            <br/>
-            <div class="col-xs-4">
-                <label for="startDate" class="form-label">Start date </label>
-                <div class="input-group date">
-                    <input type="text" class="form-control enterdatepicker" th:field="*{startDate}" id="startDate">
-                    <div style="color: red" th:if="${#fields.hasErrors('startDate')}" th:errors="*{startDate}">Date incorrect</div>
-                    <div class="input-group-addon">
-                        <span class="glyphicon glyphicon-th"></span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xs-4">
-                <label for="endDate" class="form-label">End date </label>
-                <div class="input-group date">
-                    <input type="text" class="form-control exitdatepicker" th:field="*{endDate}" id="endDate">
-                    <div style="color: red" th:if="${#fields.hasErrors('endDate')}" th:errors="*{endDate}">Date incorrect</div>
-                    <div class="input-group-addon">
-                        <span class="glyphicon glyphicon-th"></span>
-                    </div>
-                </div>
-            </div>
-            <br>
-            <div class="col-xs-4">
-                <label for="place">Place: </label>
-                <select class="form-control" id="place" name="placeName">
-                    <div th:each="place : ${places}">
-                        <option th:value="${place.name}"
-                                th:text="${place.name}"></option>
-                    </div>
-                </select>
-            </div>
-            <input type="submit" value="Create new auction"/>
+        <form method="POST" class="d-flex justify-content-center" th:action="@{/deposit}" th:object="${card}">
+            <aside class="col-sm-6 col-md-12">
+                <label for="ccNumber" style="width: max-content">Credit Card #:</label>
+                <input type="text" th:field="*{ccNumber}"/>
+                <span class="validationError"
+                      style="color: red"
+                      th:if="${#fields.hasErrors('ccNumber')}"
+                      th:errors="*{ccNumber}">CC Num Error</span>
+                <br/>
+                <label for="ccExpiration">Expiration: </label>
+                <input type="text" th:field="*{ccExpiration}"/>
+                <span class="validationError"
+                      style="color: red"
+                      th:if="${#fields.hasErrors('ccExpiration')}"
+                      th:errors="*{ccExpiration}">CC Expiration Error</span>
+                <br/>
+                <label for="ccCVV">CVV: </label>
+                <input type="text" th:field="*{ccCVV}"/>
+                <span class="validationError"
+                      style="color: red"
+                      th:if="${#fields.hasErrors('ccCVV')}"
+                      th:errors="*{ccCVV}">CC CVV Error</span>
+                <br/>
+                <label for="amount">Amount: </label>
+                <input type="text" name="amount" th:field="*{amount}"/>
+                <span class="validationError"
+                      style="color: red"
+                      th:if="${#fields.hasErrors('amount')}"
+                      th:errors="*{amount}">Amount Error</span>
+                <br/>
+                <input class="btn btn-primary" style="margin-top: 10px" type="submit" value="Confirm"/>
+            </aside>
         </form>
     </aside>
 </div>

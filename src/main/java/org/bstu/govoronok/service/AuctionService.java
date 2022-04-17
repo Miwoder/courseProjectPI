@@ -2,12 +2,17 @@ package org.bstu.govoronok.service;
 
 import lombok.RequiredArgsConstructor;
 import org.bstu.govoronok.model.Auction;
+import org.bstu.govoronok.model.BetHistory;
 import org.bstu.govoronok.model.StatusHistory;
+import org.bstu.govoronok.model.User;
 import org.bstu.govoronok.repository.AuctionRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
+import java.security.Principal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -21,6 +26,8 @@ public class AuctionService {
     private final AuctionRepository auctionRepository;
     private final AuctionStatusService auctionStatusService;
     private final StatusHistoryService statusHistoryService;
+    private final BetHistoryService betHistoryService;
+    private final UserService userService;
 
     public List<Auction> getAllNotEndedAuctions() {
         return auctionRepository
@@ -89,5 +96,33 @@ public class AuctionService {
         StatusHistory statusHistory = new StatusHistory(LocalDate.now(), auction.getAuctionStatus(), auction);
         statusHistoryService.save(statusHistory);
         logger.info("Auction statuses updated");
+    }
+
+    @Transactional
+    public void makeBet(Long auctionId, Principal principal, String bet) {
+        Optional<Auction> auction = getAuctionById(auctionId);
+        Optional<User> currentUser = Optional.ofNullable(userService.findByUsername(principal.getName()));
+        if (auction.isPresent() && currentUser.isPresent()) {
+            BigDecimal highBet = new BigDecimal(auction.get().getHighBet());
+            if (null != bet && !bet.isEmpty() && Integer.parseInt(auction.get().getHighBet()) < Integer.parseInt(bet)
+                    && currentUser.get().getBalance().compareTo(highBet) == 1
+                    && auction.get().getAuctionStatus().getName()
+                    .equals(auctionStatusService.getAuctionStatusByName("Ongoing").getName())) {
+                User lastWinner = userService.getUserById(auction.get().getUser().getId());
+                BigDecimal lastHighBet = new BigDecimal(auction.get().getHighBet());
+                lastWinner.setBalance(lastWinner.getBalance().add(lastHighBet));
+                userService.updateUser(lastWinner);
+
+                BigDecimal newHighBet = new BigDecimal(bet);
+                currentUser.get().setBalance(currentUser.get().getBalance().subtract(newHighBet));
+                userService.updateUser(currentUser.get());
+
+                auction.get().setHighBet(bet);
+                auction.get().setUser(currentUser.get());
+                saveAuction(auction.get());
+                BetHistory betHistory = new BetHistory(bet, LocalDate.now(), currentUser.get(), auction.get());
+                betHistoryService.save(betHistory);
+            }
+        }
     }
 }

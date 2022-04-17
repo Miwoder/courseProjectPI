@@ -59,6 +59,7 @@
                     <a class="dropdown-item" href="/my">My page</a>
                     <a class="dropdown-item" href="/my/won">My won auctions</a>
                     <a class="dropdown-item" href="/my/auctions">My all auctions</a>
+                    <a class="dropdown-item" href="/deposit">Deposit</a>
                 </div>
             </li>
         </ul>
@@ -84,7 +85,8 @@
         <span id="highBet" th:text="${auction.get().getHighBet()}+'$'"></span>
         <br>
         <label for="winner">Winner:</label>
-        <span id="winner" th:text="${auction.get().getUser().getName()}+${auction.get().getUser().getSurname()}"></span>
+        <span id="winner" th:text="${auction.get().getUser().getName()}"></span>
+        <span th:text="${auction.get().getUser().getSurname()}"></span>
         <br>
         <label for="place">Place name:</label>
         <span id="place" th:text="${auction.get().getPlace().getName()}"></span>

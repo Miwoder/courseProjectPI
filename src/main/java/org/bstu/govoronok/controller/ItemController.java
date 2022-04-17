@@ -46,6 +46,4 @@ public class ItemController {
         itemService.saveItem(item);
         return "redirect:/items/" + item.getId() + "/auction/add";
     }
-
-
 }

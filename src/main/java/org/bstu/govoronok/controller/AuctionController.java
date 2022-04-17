@@ -12,6 +12,7 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.math.BigDecimal;
 import java.security.Principal;
 import java.time.LocalDate;
 import java.util.Optional;
@@ -53,7 +54,7 @@ public class AuctionController {
         auction.setItem(itemService.getItemById(itemId).get());
         auction.setPlace(placeService.getPlaceByName(placeName));
         auction.setHighBet(auction.getStartBet());
-        auction.setUser(userService.findByUsername(principal.getName()));
+        auction.setUser(userService.findByUsername("user"));
         auction.setAuctionStatus(auctionStatusService.getAuctionStatusByName("Unconfirmed"));
         auctionService.saveAuction(auction);
         return "redirect:/auctions/all";
@@ -67,16 +68,7 @@ public class AuctionController {
 
     @PatchMapping("/auctions/{id}")
     public String makeBet(@PathVariable("id") Long auctionId, Principal principal, String bet) {
-        Optional<Auction> auction = auctionService.getAuctionById(auctionId);
-        if (Integer.parseInt(auction.get().getHighBet()) < Integer.parseInt(bet) &&
-                auction.get().getAuctionStatus().getName().equals(auctionStatusService.getAuctionStatusByName("Ongoing").getName())) {
-            auction.get().setHighBet(bet);
-            User user = userService.findByUsername(principal.getName());
-            auction.get().setUser(user);
-            auctionService.saveAuction(auction.get());
-            BetHistory betHistory = new BetHistory(bet, LocalDate.now(), user, auction.get());
-            betHistoryService.save(betHistory);
-        }
+        auctionService.makeBet(auctionId, principal, bet);
         return "redirect:/auctions/{id}";
     }
 
