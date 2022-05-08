@@ -1,7 +1,7 @@
 package org.bstu.govoronok.service;
 
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import lombok.val;
 import org.bstu.govoronok.model.Role;
 import org.bstu.govoronok.model.User;
 import org.bstu.govoronok.repository.UserRepository;
@@ -16,11 +16,13 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
 import java.math.BigDecimal;
 import java.security.Principal;
+import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 

@@ -15,9 +15,9 @@
 
     <title>Auctions</title>
 </head>
-<body>
-<nav class="navbar navbar-expand-lg navbar-light bg-info">
-    <a class="navbar-brand" href="/home">Home</a>
+<body style="background: #cce3ff">
+<nav class="navbar navbar-expand-lg navbar-light bg-info d-flex">
+    <a style="margin-left: 100px" class="navbar-brand" href="/home">Home</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -63,29 +63,32 @@
                 </div>
             </li>
         </ul>
+        <form method="GET" th:object="${simpleDataProvider}" style="margin-left: 25px" class="d-flex" th:action="@{/auctions/find}">
+            <input class="form-control me-2" type="search" placeholder="Search" th:field="*{textField}" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
     </div>
-</nav>
-<div class="container">
+</nav><div class="container">
     <div class="row">
-        <div class="card" style="width: 18rem;" th:each="auction: ${auctions}">
+        <div class="card" style="width: 18rem; border-radius: 20px; margin: 15px; " th:each="auction: ${auctions}">
             <div class="card-body">
-                <h5 class="card-title" th:text="Auction + ${auction.getId()}"></h5>
-                <label for="itemName">Item:</label>
+                <h3 style="text-align: center" class="card-title" th:text="Auction + ' #' + ${auction.getId()}"></h3>
+                <label style="font-size: large" for="itemName">Item:</label>
                 <span id="itemName" th:text="${auction.getItem().getName()}"></span>
                 <br>
-                <label for="startDate">Start:</label>
+                <label style="font-size: large" for="startDate">Start:</label>
                 <span id="startDate" th:text="${auction.getStartDate()}"></span>
                 <br>
-                <label for="endDate">Ends:</label>
+                <label style="font-size: large" for="endDate">Ends:</label>
                 <span id="endDate" th:text="${auction.getEndDate()}"></span>
                 <br>
-                <label for="highBet">High bet:</label>
+                <label style="font-size: large" for="highBet">High bet:</label>
                 <span id="highBet" th:text="${auction.getHighBet()}+'$'"></span>
                 <br>
-                <label for="place">Place name:</label>
+                <label style="font-size: large" for="place">Place name:</label>
                 <span id="place" th:text="${auction.getPlace().getName()}"></span>
                 <br>
-                <form th:method="GET" th:action="@{/auctions/{id}(id=${auction.getId()})}">
+                <form th:method="GET" th:action="@{/auctions/auction/{id}(id=${auction.getId()})}">
                     <input class="btn btn-primary" type="submit" value="Auction info"/>
                 </form>
             </div>

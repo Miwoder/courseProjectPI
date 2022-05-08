@@ -8,9 +8,9 @@
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <title>Deposit</title>
 </head>
-<body>
-<nav class="navbar navbar-expand-lg navbar-light bg-info">
-    <a class="navbar-brand" href="/home">Home</a>
+<body style="background: #cce3ff">
+<nav class="navbar navbar-expand-lg navbar-light bg-info d-flex">
+    <a style="margin-left: 100px" class="navbar-brand" href="/home">Home</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -58,8 +58,7 @@
         </ul>
     </div>
 </nav>
-
-<div class="container" style="font-size: x-large; height: 400px; width: 300px; position: absolute; left: 0;
+<div class="container" style="background: #cce3ff; font-size: large; height: 400px; width: 300px; position: absolute; left: 0;
         right: 0; top: 0; bottom: 0; margin: auto; max-width: 100%; max-height: 100%; overflow: auto;">
     <aside class="col-sm-4">
         <form method="POST" class="d-flex justify-content-center" th:action="@{/deposit}" th:object="${card}">
@@ -67,7 +66,7 @@
                 <label for="ccNumber" style="width: max-content">Credit Card #:</label>
                 <input type="text" th:field="*{ccNumber}"/>
                 <span class="validationError"
-                      style="color: red"
+                      style="color: red; width: max-content"
                       th:if="${#fields.hasErrors('ccNumber')}"
                       th:errors="*{ccNumber}">CC Num Error</span>
                 <br/>
@@ -79,7 +78,7 @@
                       th:errors="*{ccExpiration}">CC Expiration Error</span>
                 <br/>
                 <label for="ccCVV">CVV: </label>
-                <input type="text" th:field="*{ccCVV}"/>
+                <input type="password" th:field="*{ccCVV}"/>
                 <span class="validationError"
                       style="color: red"
                       th:if="${#fields.hasErrors('ccCVV')}"

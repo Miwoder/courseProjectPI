@@ -13,17 +13,19 @@
 
     <title>Auctions</title>
 </head>
-<body>
-<nav class="navbar navbar-expand-lg navbar-light bg-info">
-    <a class="navbar-brand" href="/home">Home</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+<body style="background: #cce3ff">
+<nav class="navbar navbar-expand-lg navbar-light bg-info d-flex">
+    <a style="margin-left: 100px" class="navbar-brand" href="/home">Home</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="/auctions/all" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <a class="nav-link dropdown-toggle" href="/auctions/all" id="navbarDropdownMenuLink"
+                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Auctions
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
@@ -47,7 +49,8 @@
                 <a class="nav-link" href="/places/">Places</a>
             </li>
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink2" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">
                     My page
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink2">
@@ -60,21 +63,21 @@
         </ul>
     </div>
 </nav>
-<div class="container">
+<div class="container" style="background: #cce3ff">
     <div class="row">
-        <div class="card" style="width: 18rem;" th:each="place: ${places}">
+        <div class="card" style="width: 18rem; border-radius: 20px; margin: 15px; " th:each="place: ${places}">
             <div class="card-body">
-                <h5 class="card-title" th:text="Place + ${place.getId()}"></h5>
-                <label for="itemName">Name:</label>
-                <span id="itemName" th:text="${place.getName()}"></span>
+                <h3 class="card-title" style="text-align: center" th:text="Place + ' #' + ${place.getId()}"></h3>
+                <label style="font-size: large" for="itemName">Name:</label>
+                <span style="margin-bottom: 5px;" id="itemName" th:text="${place.getName()}"></span>
                 <br>
-                <label for="endDate">Country:</label>
+                <label style="font-size: large" for="endDate">Country:</label>
                 <span id="endDate" th:text="${place.getCountry()}"></span>
                 <br>
-                <label for="highBet">City:</label>
+                <label style="font-size: large" for="highBet">City:</label>
                 <span id="highBet" th:text="${place.getCity()}"></span>
                 <br>
-                <label for="startDate">Address:</label>
+                <label style="font-size: large" for="startDate">Address:</label>
                 <span id="startDate" th:text="${place.getAddress()}"></span>
             </div>
         </div>

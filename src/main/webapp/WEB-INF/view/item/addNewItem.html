@@ -8,9 +8,9 @@
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <title>Add new item</title>
 </head>
-<body>
-<nav class="navbar navbar-expand-lg navbar-light bg-info">
-    <a class="navbar-brand" href="/home">Home</a>
+<body style="background: #cce3ff">
+<nav class="navbar navbar-expand-lg navbar-light bg-info d-flex">
+    <a style="margin-left: 100px" class="navbar-brand" href="/home">Home</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -58,7 +58,7 @@
         </ul>
     </div>
 </nav>
-<div class="container">
+<div class="container" style="background: #cce3ff">
     <aside class="col-sm-4">
         <form method="POST" th:object="${item}" th:action="@{/auctions/add/item}">
             <div class="col-xs-4">

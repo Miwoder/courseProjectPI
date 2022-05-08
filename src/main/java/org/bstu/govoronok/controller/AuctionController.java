@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.bstu.govoronok.model.Auction;
 import org.bstu.govoronok.model.BetHistory;
 import org.bstu.govoronok.model.User;
+import org.bstu.govoronok.provider.SimpleDataProvider;
 import org.bstu.govoronok.service.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +16,7 @@ import javax.validation.Valid;
 import java.math.BigDecimal;
 import java.security.Principal;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -33,6 +35,15 @@ public class AuctionController {
     @GetMapping("/auctions/all")
     public String getAllAuctions(Model model) {
         model.addAttribute("auctions", auctionService.getAllNotEndedAuctions());
+        model.addAttribute("simpleDataProvider", new SimpleDataProvider());
+        return "/auction/auctions";
+    }
+
+    @GetMapping("/auctions/find")
+    public String findAuctions(@ModelAttribute("simpleDataProvider") SimpleDataProvider simpleDataProvider,
+                               Model model) {
+        List<Auction> auctions = auctionService.getAuctionsByKey(simpleDataProvider.getTextField());
+        model.addAttribute("auctions", auctions);
         return "/auction/auctions";
     }
 
@@ -54,111 +65,91 @@ public class AuctionController {
         auction.setItem(itemService.getItemById(itemId).get());
         auction.setPlace(placeService.getPlaceByName(placeName));
         auction.setHighBet(auction.getStartBet());
-        auction.setUser(userService.findByUsername("user"));
+        auction.setUser(userService.findByUsername(principal.getName()));
         auction.setAuctionStatus(auctionStatusService.getAuctionStatusByName("Unconfirmed"));
         auctionService.saveAuction(auction);
         return "redirect:/auctions/all";
     }
 
-    @GetMapping("/auctions/{id}")
+    @GetMapping("/auctions/auction/{id}")
     public String getWonAuctions(Model model, @PathVariable("id") Long auctionId) {
         model.addAttribute("auction", auctionService.getAuctionById(auctionId));
         return "/auction/auction";
     }
 
-    @PatchMapping("/auctions/{id}")
+    @PatchMapping("/auctions/auction/{id}")
     public String makeBet(@PathVariable("id") Long auctionId, Principal principal, String bet) {
         auctionService.makeBet(auctionId, principal, bet);
-        return "redirect:/auctions/{id}";
-    }
-
-    @GetMapping("/auctions/cars")
-    public String getAuctionsWithCars(Model model) {
-        model.addAttribute("auctions", auctionService.getAuctionByType("Cars"));
-        return "/auction/auctions";
-    }
-
-    @GetMapping("/auctions/furniture")
-    public String getAuctionsWithFurniture(Model model) {
-        model.addAttribute("auctions", auctionService.getAuctionByType("Furniture"));
-        return "/auction/auctions";
-    }
-
-    @GetMapping("/auctions/houses")
-    public String getAuctionsWithHouses(Model model) {
-        model.addAttribute("auctions", auctionService.getAuctionByType("Houses"));
-        return "/auction/auctions";
-    }
-
-    @GetMapping("/auctions/animals")
-    public String getAuctionsWithAnimals(Model model) {
-        model.addAttribute("auctions", auctionService.getAuctionByType("Animals"));
-        return "/auction/auctions";
-    }
-
-    @GetMapping("/auctions/materials")
-    public String getAuctionsWithMaterials(Model model) {
-        model.addAttribute("auctions", auctionService.getAuctionByType("Materials"));
-        return "/auction/auctions";
+        return "redirect:/auctions/auction/{id}";
     }
 
     @GetMapping("/auctions/ssd")
     public String getAuctionsWithSSD(Model model) {
         model.addAttribute("auctions", auctionService.getAuctionByType("SSD"));
+        model.addAttribute("simpleDataProvider", new SimpleDataProvider());
         return "/auction/auctions";
     }
 
     @GetMapping("/auctions/power_supplies")
     public String getAuctionsWithPowerSupplies(Model model) {
         model.addAttribute("auctions", auctionService.getAuctionByType("Power supplie"));
+        model.addAttribute("simpleDataProvider", new SimpleDataProvider());
         return "/auction/auctions";
     }
 
     @GetMapping("/auctions/video_cards")
     public String getAuctionsWithVideoCards(Model model) {
         model.addAttribute("auctions", auctionService.getAuctionByType("Video card"));
+        model.addAttribute("simpleDataProvider", new SimpleDataProvider());
         return "/auction/auctions";
     }
 
     @GetMapping("/auctions/hard_disks")
     public String getAuctionsWithHardDisks(Model model) {
         model.addAttribute("auctions", auctionService.getAuctionByType("Hard disk"));
+        model.addAttribute("simpleDataProvider", new SimpleDataProvider());
         return "/auction/auctions";
     }
 
     @GetMapping("/auctions/sound_cards")
     public String getAuctionsWithSoundCards(Model model) {
         model.addAttribute("auctions", auctionService.getAuctionByType("Sound card"));
+        model.addAttribute("simpleDataProvider", new SimpleDataProvider());
         return "/auction/auctions";
     }
 
     @GetMapping("/auctions/corps")
     public String getAuctionsWithCorps(Model model) {
         model.addAttribute("auctions", auctionService.getAuctionByType("Corp"));
+        model.addAttribute("simpleDataProvider", new SimpleDataProvider());
         return "/auction/auctions";
     }
 
     @GetMapping("/auctions/motherboards")
     public String getAuctionsWithMotherboards(Model model) {
         model.addAttribute("auctions", auctionService.getAuctionByType("Motherboard"));
+        model.addAttribute("simpleDataProvider", new SimpleDataProvider());
         return "/auction/auctions";
     }
 
     @GetMapping("/auctions/ram")
     public String getAuctionsWithRam(Model model) {
         model.addAttribute("auctions", auctionService.getAuctionByType("RAM"));
+        model.addAttribute("simpleDataProvider", new SimpleDataProvider());
         return "/auction/auctions";
     }
 
     @GetMapping("/auctions/optical_drive")
     public String getAuctionsWithOpticalDrive(Model model) {
         model.addAttribute("auctions", auctionService.getAuctionByType("Optical drive"));
+        model.addAttribute("simpleDataProvider", new SimpleDataProvider());
         return "/auction/auctions";
     }
 
     @GetMapping("/auctions/processors")
     public String getAuctionsWithProcessors(Model model) {
         model.addAttribute("auctions", auctionService.getAuctionByType("Processor"));
+        model.addAttribute("simpleDataProvider", new SimpleDataProvider());
         return "/auction/auctions";
     }
 }

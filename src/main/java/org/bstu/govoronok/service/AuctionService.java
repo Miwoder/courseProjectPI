@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.security.Principal;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -68,12 +69,21 @@ public class AuctionService {
                 "END", "Unconfirmed");
     }
 
+    @Transactional
     public void updateAuctionsStatuses() {
         List<Auction> auctions = getAllConfirmedAuctions();
         for (Auction auction : auctions) {
-            if (auction.getStartDate().isAfter(LocalDate.now())) {
+            if (auction.getEndDate().isBefore(LocalDate.now())
+                    && !auction.getAuctionStatus().getName().equals("Unconfirmed")) {
+                auction.setAuctionStatus(auctionStatusService.getAuctionStatusByName("END"));
+            }
+            if (auction.getStartDate().isAfter(LocalDate.now())
+                    && !auction.getAuctionStatus().getName().equals("END")
+                    && !auction.getAuctionStatus().getName().equals("Unconfirmed")) {
                 auction.setAuctionStatus(auctionStatusService.getAuctionStatusByName("Starts soon"));
-            } else {
+            } else if (!auction.getStartDate().isAfter(LocalDate.now())
+                    && !auction.getAuctionStatus().getName().equals("END")
+                    && !auction.getAuctionStatus().getName().equals("Unconfirmed")) {
                 auction.setAuctionStatus(auctionStatusService.getAuctionStatusByName("Ongoing"));
             }
             saveAuction(auction);
@@ -96,6 +106,14 @@ public class AuctionService {
         StatusHistory statusHistory = new StatusHistory(LocalDate.now(), auction.getAuctionStatus(), auction);
         statusHistoryService.save(statusHistory);
         logger.info("Auction statuses updated");
+    }
+
+    @Transactional
+    public List<Auction> getAuctionsByKey(String key) {
+        List<Auction> auctions = new ArrayList<>();
+        auctions.addAll(auctionRepository.findByKeyword(key));
+        auctions.addAll(auctionRepository.getAuctionsByItem_DescriptionLike(key));
+        return auctions;
     }
 
     @Transactional

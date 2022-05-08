@@ -16,25 +16,34 @@
 </head>
 <body>
 <div class="container">
-    <form class="d-flex justify-content-center" method="POST" th:name="f" th:action="@{/signin}">
-        <aside class="col-sm-4">
-        <div class="col-xs-4">
-            <div th:if="${param.error}" class="alert alert-error"> Invalid email/password or user unconfirmed</div>
-            <div th:if="${param.logout}" class="alert alert-success"> You have been logged out</div>
-            <label for="username" class="form-label">Email</label>
-            <input type="email" class="form-control" id="username" name="username" aria-describedby="emailHelp">
-            <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
-        </div>
-        <div class="col-xs-4" >
-            <label for="password" class="form-label">Password</label>
-            <input type="password" class="form-control" id="password" name="password">
-        </div>
-        <div class="form-actions">
-            <button type="submit" class="btn btn-primary">Sign in</button>
-        </div>
-        <a href="signup">Sign up</a>
-        <br/>
-        <a href="/authentication/forgot_password">Forgot your password?</a>
+    <form style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); padding: 10px;"
+          class="d-flex justify-content-center" method="POST" th:name="f"
+          th:action="@{/signin}">
+        <aside class="col-sm-12">
+
+            <div class="col-xs-4">
+
+                <div th:if="${param.error}" class="alert alert-error"> Invalid email/password or user unconfirmed</div>
+                <div th:if="${param.logout}" class="alert alert-success"> You have been logged out</div>
+
+                <label for="username" class="form-label">Email</label>
+                <input type="email" class="form-control" id="username" name="username" aria-describedby="emailHelp">
+                <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+
+            </div>
+            <div class="col-xs-4">
+
+                <label for="password" class="form-label">Password</label>
+                <a href="/authentication/forgot_password">Forgot?</a>
+                <input type="password" class="form-control" id="password" name="password">
+
+            </div>
+
+            <div class="form-actions">
+                <button style="margin-top: 10px" type="submit" class="btn btn-primary">Sign in</button>
+            </div>
+
+            <a style="" href="signup">Sign up</a>
         </aside>
     </form>
 </div>

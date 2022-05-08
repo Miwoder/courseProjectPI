@@ -15,9 +15,9 @@
 
     <title>Auction info</title>
 </head>
-<body>
-<nav class="navbar navbar-expand-lg navbar-light bg-info">
-    <a class="navbar-brand" href="/home">Home</a>
+<body style="background: #cce3ff">
+<nav class="navbar navbar-expand-lg navbar-light bg-info d-flex">
+    <a style="margin-left: 100px" class="navbar-brand" href="/home">Home</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -65,40 +65,57 @@
         </ul>
     </div>
 </nav>
-<div class="container">
+<div class="container" style="background: #cce3ff">
+    <div class="row" th:object="${auction}">
+        <h1 style="text-align: center; margin-top: revert; font-size: xxx-large;"
+            th:text="'Auction #' + ${auction.get().getId()}"></h1>
+        <h1 style="text-align: center; font-size: xxx-large;" th:text="${auction.get().getItem().getName()}"></h1>
+        <br>
+        <br>
 
+        <div class="col-sm-4">
+            <br>
+            <span style="padding-right: 10px" th:text="${auction.get().getItem().getDescription()}"></span>
+        </div>
 
-    <div th:object="${auction}">
-        <label for="id">Id:</label>
-        <span id="id" th:text="${auction.get().getId()}"></span>
-        <br>
-        <label for="itemName">Item:</label>
-        <span id="itemName" th:text="${auction.get().getItem().getName()}"></span>
-        <br>
-        <label for="startDate">Start:</label>
-        <span id="startDate" th:text="${auction.get().getStartDate()}"></span>
-        <br>
-        <label for="endDate">Ends:</label>
-        <span id="endDate" th:text="${auction.get().getEndDate()}"></span>
-        <br>
-        <label for="highBet">High bet:</label>
-        <span id="highBet" th:text="${auction.get().getHighBet()}+'$'"></span>
-        <br>
-        <label for="winner">Winner:</label>
-        <span id="winner" th:text="${auction.get().getUser().getName()}"></span>
-        <span th:text="${auction.get().getUser().getSurname()}"></span>
-        <br>
-        <label for="place">Place name:</label>
-        <span id="place" th:text="${auction.get().getPlace().getName()}"></span>
-        <br>
+        <div class="col-sm-6">
+            <br>
+            <h4 style="font-size: xx-large">Winner: </h4>
+            <span style="font-size: x-large">
+                <span th:text="${auction.get().getUser().getName()}"></span>
+                <span th:text="${auction.get().getUser().getSurname()}"></span>
+            </span>
+            <br>
+            <h4 style="font-size: xx-large">Place name: </h4>
+            <span style="font-size: x-large" th:text="${auction.get().getPlace().getName()}"></span>
+            <br>
+            <h4 style="font-size: xx-large">High bet: </h4>
+            <span style="font-size: x-large" th:text="${auction.get().getHighBet()}+'$'"></span>
+            <br>
+            <br>
+            <form th:method="PATCH" th:action="@{/auctions/auction/{id}(id=${id})}">
+                <label>(US)$ </label>
+                <input type="text" name="bet" style="padding: 6px 10px; line-height: 1px;"/>
+                <input type="submit" class="btn btn-primary" value="Place bid"/>
+            </form>
+
+        </div>
+
+        <div class="col-sm-2">
+            <br>
+            <br>
+            <div style="text-align: center">
+                <label for="startDate">Start:</label>
+                <span id="startDate" th:text="${auction.get().getStartDate()}"></span>
+            </div>
+            <br>
+            <div style="text-align: center">
+                <label for="endDate">End:</label>
+                <span id="endDate" th:text="${auction.get().getEndDate()}"></span>
+            </div>
+        </div>
+
     </div>
-
-    <form th:method="PATCH" th:action="@{/auctions/{id}(id=${id})}">
-        <label>Bet: </label>
-        <input type="text" name="bet"/>
-        <br/>
-        <input type="submit" value="Make bet"/>
-    </form>
 </div>
 </body>
 </html>

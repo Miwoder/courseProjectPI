@@ -4,19 +4,19 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.bstu.govoronok.model.Auction;
 import org.bstu.govoronok.model.Role;
-import org.bstu.govoronok.model.StatusHistory;
 import org.bstu.govoronok.model.User;
 import org.bstu.govoronok.service.AuctionService;
+import org.bstu.govoronok.service.BetHistoryService;
 import org.bstu.govoronok.service.PaymentService;
 import org.bstu.govoronok.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.security.Principal;
 import java.time.LocalDate;
+import java.util.List;
 
 
 @Controller
@@ -26,6 +26,7 @@ public class PersonalPageController {
 
     private final UserService userService;
     private final AuctionService auctionService;
+    private final BetHistoryService betHistoryService;
     private final PaymentService paymentService;
 
     @GetMapping("/my/won")
@@ -46,6 +47,20 @@ public class PersonalPageController {
     public String getMyPage(Model model, Principal principal) {
         User user = userService.findByUsername(principal.getName());
         model.addAttribute("user", user);
+
+        List<Auction> userWonAuctions = auctionService.getAllWonAuctionsByUser(user.getId());
+
+        String numberOfWonAuctions = String.valueOf(userWonAuctions.size());
+        String numberOfWonAuctionsForLastMonth = String.valueOf(userWonAuctions.stream()
+                .filter(auction -> (LocalDate.now().getMonthValue() - auction.getEndDate().getMonthValue() == 0)
+                        && auction.getEndDate().getYear() == LocalDate.now().getYear())
+                .count());
+        String maxBet = betHistoryService.getMaxBetByUserId(user.getId()) + "$";
+
+        model.addAttribute("numberOfWonAuctions", numberOfWonAuctions);
+        model.addAttribute("numberOfWonAuctionsForLastMonth", numberOfWonAuctionsForLastMonth);
+        model.addAttribute("maxBet", maxBet);
+
         if (user.getRole().equals(Role.USER)) {
             return "user/myPage";
         } else {
@@ -54,12 +69,11 @@ public class PersonalPageController {
     }
 
     @PatchMapping("/my")
-    public String approveAuction(Principal principal) {
+    public String changePreferredPayment(Principal principal) {
         User user = userService.findByUsername(principal.getName());
-        if(user.getPayment().getId()==1){
+        if (user.getPayment().getId() == 1) {
             user.setPayment(paymentService.getPaymentById(2L).get());
-            }
-        else {
+        } else {
             user.setPayment(paymentService.getPaymentById(1L).get());
         }
         userService.updateUser(user);

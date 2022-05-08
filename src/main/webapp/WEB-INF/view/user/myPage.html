@@ -15,9 +15,9 @@
 
     <title>My page</title>
 </head>
-<body>
+<body style="background: #cce3ff">
 <nav class="navbar navbar-expand-lg navbar-light bg-info d-flex">
-    <a class="navbar-brand" href="/home">Home</a>
+    <a style="margin-left: 100px" class="navbar-brand" href="/home">Home</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -65,30 +65,49 @@
         </ul>
     </div>
 </nav>
-<div class="container">
-    <div th:object="${user}">
-        <h3>My profile</h3>
-        <label for="name">First Name:</label>
-        <span id="name" th:text="${user.getName()}"></span>
-        <br>
-        <label for="surname">Last Name:</label>
-        <span id="surname" th:text="${user.getSurname()}"></span>
-        <br>
-        <label for="email">Email:</label>
-        <span id="email" th:text="${user.getEmail()}"></span>
-        <br>
-        <label for="phone">Phone:</label>
-        <span id="phone" th:text="${user.getPhone()}"></span>
-        <br>
-        <label for="balance">Balance:</label>
-        <span id="balance" th:text="${user.getBalance()}+'$'"></span>
-        <br>
-        <label for="payment">Preferred payment method:</label>
-        <span id="payment" th:text="${user.getPayment().getName()}"></span>
-        <form th:method="PATCH" th:action="@{/my}">
-            <input type="submit" value="Change to another method"/>
-        </form>
+<div class="container" style="background: #cce3ff">
+    <h1 style="margin: revert; font-size: xxx-large;">My profile</h1>
+
+    <div class="row" style="margin-top: 30px" th:object="${user}">
+        <div class="col-sm-4">
+            <h2 id="name" th:text="${user.getName()} +' '+ ${user.getSurname()}"></h2>
+        </div>
+
+        <div class="col-sm-4">
+            <h4 for="role">Role:</h4>
+            <div id="role" style="font-size: large" th:text="${user.getRole().getRole()}"></div>
+            <br/>
+            <h4 for="email">Email:</h4>
+            <div id="email" style="font-size: large" th:text="${user.getEmail()}"></div>
+            <br>
+            <h4 for="phone">Phone:</h4>
+            <div id="phone" style="font-size: large" th:text="${user.getPhone()}"></div>
+            <br>
+        </div>
+        <div class="col-sm-4">
+            <div style="font-size: xx-large" id="balance" th:text="'Balance: ' + ${user.getBalance()}+'$'"></div>
+            <br>
+            <label for="payment">Preferred payment method:</label>
+            <div id="payment" th:text="${user.getPayment().getName()}"></div>
+            <br>
+            <img th:src="@{/images/stats.png}" style="width: 80%" alt="stats">
+
+        </div>
     </div>
+    <div class="row">
+        <div class="col-sm-8">
+            <h2> Statistics: </h2>
+            <div th:text=" 'Total number of auctions won:' + ${numberOfWonAuctions}"></div>
+            <div th:text=" 'Total number of auctions won in a last month:' + ${numberOfWonAuctionsForLastMonth}"></div>
+            <div th:text=" 'Max bet:' + ${maxBet}"></div>
+        </div>
+        <div class="col-sm-4">
+        </div>
+    </div>
+    <br/>
+    <form th:method="PATCH" th:action="@{/my}">
+        <input type="submit" class="btn btn-primary" value="Change to another method"/>
+    </form>
 </div>
 </body>
 </html>

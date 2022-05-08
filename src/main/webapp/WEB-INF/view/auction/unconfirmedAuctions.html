@@ -14,9 +14,9 @@
 
     <title>Unconfirmed auctions</title>
 </head>
-<body>
-<nav class="navbar navbar-expand-lg navbar-light bg-info">
-    <a class="navbar-brand" href="/home">Home</a>
+<body style="background: #cce3ff">
+<nav class="navbar navbar-expand-lg navbar-light bg-info d-flex">
+    <a style="margin-left: 100px" class="navbar-brand" href="/home">Home</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -64,7 +64,7 @@
         </ul>
     </div>
 </nav>
-<div class="container">
+<div class="container" style="background: #cce3ff">
     <table>
         <tr>
             <th width="5%">Auction ID</th>
@@ -81,21 +81,21 @@
         </tr>
         <tr th:each="auction : ${auctions}">
             <td th:text="${auction.getId()}"/>
-            <td th:text="${auction.getItem().getName()}"/>
-            <td th:text="${auction.getItem().getDescription()}"/>
-            <td th:text="${auction.getItem().getItemType().getName()}"/>
-            <td th:text="${auction.getStartDate()}"/>
-            <td th:text="${auction.getEndDate()}"/>
-            <td th:text="${auction.getStartBet()}+'$'"/>
-            <td th:text="${auction.getUser().getName()}"/>
-            <td th:text="${auction.getUser().getSurname()}"/>
-            <td th:text="${auction.getUser().getEmail()}"/>
+            <td style="border-width: 0px 1px;" th:text="${auction.getItem().getName()}"/>
+            <td style="border-width: 0px 1px;" th:text="${auction.getItem().getDescription()}"/>
+            <td style="border-width: 0px 1px;" th:text="${auction.getItem().getItemType().getName()}"/>
+            <td style="border-width: 0px 1px;" th:text="${auction.getStartDate()}"/>
+            <td style="border-width: 0px 1px;" th:text="${auction.getEndDate()}"/>
+            <td style="border-width: 0px 1px;" th:text="${auction.getStartBet()}+'$'"/>
+            <td style="border-width: 0px 1px;" th:text="${auction.getUser().getName()}"/>
+            <td style="border-width: 0px 1px;" th:text="${auction.getUser().getSurname()}"/>
+            <td style="border-width: 0px 1px;" th:text="${auction.getUser().getEmail()}"/>
             <td>
                 <form th:method="DELETE" th:action="@{/administration/{id}(id=${auction.getId()})}">
-                    <input type="submit" value="Delete"/>
+                    <input class="btn btn-danger" type="submit" value="Delete"/>
                 </form>
                 <form th:method="PATCH" th:action="@{/administration/{id}(id=${auction.getId()})}">
-                    <input type="submit" value="Approve"/>
+                    <input style="margin: 5px 0" class="btn btn-success" type="submit" value="Approve"/>
                 </form>
             </td>
         </tr>
