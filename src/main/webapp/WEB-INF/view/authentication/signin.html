@@ -14,18 +14,19 @@
 
     <title>SIGN IN</title>
 </head>
-<body>
+<body th:style="'background: url(/images/signin.jpg) no-repeat; background-size: 100%;'">
 <div class="container">
-    <form style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); padding: 10px;"
+    <form style="position: absolute; left: 50%; top: 50%; width: 40%; height: 65%; transform: translate(-50%, -50%);
+    padding: 10px; background: white; border-radius: 25px"
           class="d-flex justify-content-center" method="POST" th:name="f"
           th:action="@{/signin}">
-        <aside class="col-sm-12">
+        <aside class="col-sm-12" style="padding-right: 30px; padding-left: 30px; padding-top: 10px">
+            <div style="font-size: 39px; width: 100%; text-align: center; padding-bottom: 53px">Sign in</div>
 
             <div class="col-xs-4">
-
-                <div th:if="${param.error}" class="alert alert-error"> Invalid email/password or user unconfirmed</div>
+                <div th:if="${param.error}" style="text-align: center; width: 100%; color: red;"
+                     class="alert alert-error"> Invalid email/password or user unconfirmed</div>
                 <div th:if="${param.logout}" class="alert alert-success"> You have been logged out</div>
-
                 <label for="username" class="form-label">Email</label>
                 <input type="email" class="form-control" id="username" name="username" aria-describedby="emailHelp">
                 <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
@@ -40,7 +41,7 @@
             </div>
 
             <div class="form-actions">
-                <button style="margin-top: 10px" type="submit" class="btn btn-primary">Sign in</button>
+                <button style="margin-top: 10px; width: 100%" type="submit" class="btn btn-primary">Sign in</button>
             </div>
 
             <a style="" href="signup">Sign up</a>

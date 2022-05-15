@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.bstu.govoronok.model.Auction;
 import org.bstu.govoronok.model.Role;
 import org.bstu.govoronok.model.User;
+import org.bstu.govoronok.provider.SimpleDataProvider;
 import org.bstu.govoronok.service.AuctionService;
 import org.bstu.govoronok.service.BetHistoryService;
 import org.bstu.govoronok.service.PaymentService;
@@ -40,6 +41,7 @@ public class PersonalPageController {
     public String getMyAuctions(Model model, Principal principal) {
         User user = userService.findByUsername(principal.getName());
         model.addAttribute("auctions", auctionService.getAllAuctionsByUser(user.getId()));
+        model.addAttribute("simpleDataProvider", new SimpleDataProvider());
         return "/auction/auctions";
     }
 

@@ -67,19 +67,28 @@
     </div>
 </nav>
 <div class="container" style="background: #cce3ff">
-    <aside class="col-sm-4">
-        <form method="POST" th:object="${auction}" th:action="@{/items/{itemId}/auction/add(itemId=${itemId})}">
+    <form method="POST" style="position: absolute; left: 50%; top: 50%; width: 40%; height: 75%;
+              transform: translate(-50%, -50%); padding: 10px; background: white; border-radius: 25px"
+          class="d-flex justify-content-center"
+          th:object="${auction}" th:action="@{/items/{itemId}/auction/add(itemId=${itemId})}">
+        <aside class="col-sm-12" style="padding-right: 30px; padding-left: 30px; padding-top: 10px">
+            <div style="font-size: 39px; width: 100%; text-align: center; padding-bottom: 33px">Auction info</div>
+
             <div class="col-xs-4">
                 <label for="startBet" class="form-label">Start bet: </label>
-                <input type='text' class="form-control" th:field="*{startBet}" id="startBet"/>
-                <div style="color: red" th:if="${#fields.hasErrors('startBet')}" th:errors="*{startBet}">Start bet incorrect</div>
+                <input type='text' style="width: 100%" class="form-control" th:field="*{startBet}" id="startBet"/>
+                <div style="color: red" th:if="${#fields.hasErrors('startBet')}" th:errors="*{startBet}">Start bet
+                    incorrect
+                </div>
             </div>
             <br/>
             <div class="col-xs-4">
                 <label for="startDate" class="form-label">Start date </label>
                 <div class="input-group date">
                     <input type="text" class="form-control enterdatepicker" th:field="*{startDate}" id="startDate">
-                    <div style="color: red" th:if="${#fields.hasErrors('startDate')}" th:errors="*{startDate}">Date incorrect</div>
+                    <div style="color: red" th:if="${#fields.hasErrors('startDate')}" th:errors="*{startDate}">Date
+                        incorrect
+                    </div>
                     <div class="input-group-addon">
                         <span class="glyphicon glyphicon-th"></span>
                     </div>
@@ -89,7 +98,9 @@
                 <label for="endDate" class="form-label">End date </label>
                 <div class="input-group date">
                     <input type="text" class="form-control exitdatepicker" th:field="*{endDate}" id="endDate">
-                    <div style="color: red" th:if="${#fields.hasErrors('endDate')}" th:errors="*{endDate}">Date incorrect</div>
+                    <div style="color: red" th:if="${#fields.hasErrors('endDate')}" th:errors="*{endDate}">Date
+                        incorrect
+                    </div>
                     <div class="input-group-addon">
                         <span class="glyphicon glyphicon-th"></span>
                     </div>
@@ -105,9 +116,11 @@
                     </div>
                 </select>
             </div>
-            <input type="submit" value="Create new auction"/>
-        </form>
-    </aside>
+            <div class="form-actions">
+                <button style="margin-top: 10px; width: 100%" type="submit" class="btn btn-primary">Create new auction</button>
+            </div>
+        </aside>
+    </form>
 </div>
 </body>
 </html>

@@ -14,26 +14,53 @@
 
     <title>New user</title>
 </head>
-<body>
+<body th:style="'background: url(/images/signin.jpg) no-repeat; background-size: 100%;'">
 <div class="container">
-    <form method="POST" class="d-flex justify-content-center" th:object="${user}" th:action="@{/signup}">
-        <aside class="col-sm-4">
-            <label for="firstName" class="form-label">First name: </label>
-            <input type="text" th:field="*{name}" class="form-control" id="firstName"/>
-            <br/>
-            <label for="lastName" class="form-label">Last name: </label>
-            <input type="text" th:field="*{surname}" class="form-control" id="lastName"/>
-            <br/>
-            <label for="email" class="form-label">Email: </label>
-            <input type="text" th:field="*{email}" class="form-control" id="email"/>
-            <br/>
-            <label for="password" class="form-label">Password: </label>
-            <input type='password' th:field="*{password}" class="form-control" id="password"/>
-            <br/>
-            <label for="phone" class="form-label">Phone: </label>
-            <input type='text' th:field="*{phone}" class="form-control" id="phone"/>
-            <br/>
-            <input type="submit" class="btn btn-primary" value="Sing up"/>
+    <form method="POST" style="position: absolute; left: 50%; top: 50%; width: 40%; height: 92%; transform: translate(-50%, -50%);
+    padding: 10px; background: white; border-radius: 25px" class="d-flex justify-content-center"
+          th:object="${user}" th:action="@{/signup}">
+        <aside class="col-sm-12" style="padding-right: 30px; padding-left: 30px; padding-top: 10px">
+            <div style="font-size: 29px; width: 100%; text-align: center; padding-bottom: 33px">Sign in</div>
+
+            <div class="col-xs-4">
+
+                <label for="firstName" class="form-label">First name: </label>
+                <input type="text" th:field="*{name}" class="form-control" id="firstName"/>
+                <label class="validationError"
+                       style="color: red; width: max-content"
+                       th:if="${#fields.hasErrors('name')}"
+                       th:errors="*{name}">Amount Error</label>                <br/>
+                <label for="lastName" class="form-label">Last name: </label>
+                <input type="text" th:field="*{surname}" class="form-control" id="lastName"/>
+                <label class="validationError"
+                       style="color: red; width: max-content"
+                       th:if="${#fields.hasErrors('surname')}"
+                       th:errors="*{surname}">Amount Error</label>                <br/>
+                <label for="email" class="form-label">Email: </label>
+                <input type="text" th:field="*{email}" class="form-control" id="email"/>
+                <label class="validationError"
+                       style="color: red; width: max-content"
+                       th:if="${#fields.hasErrors('email')}"
+                       th:errors="*{email}">Amount Error</label>                <br/>
+                <label for="password" class="form-label">Password: </label>
+                <input type='password' th:field="*{password}" class="form-control" id="password"/>
+                <label class="validationError"
+                       style="color: red; width: max-content"
+                       th:if="${#fields.hasErrors('password')}"
+                       th:errors="*{password}">Amount Error</label>                <br/>
+                <label for="phone" class="form-label">Phone: </label>
+                <input type='text' th:field="*{phone}" class="form-control" id="phone"/>
+                <label class="validationError"
+                       style="color: red; width: max-content"
+                       th:if="${#fields.hasErrors('phone')}"
+                       th:errors="*{phone}">Amount Error</label>
+                <br/>
+
+            </div>
+
+            <div class="form-actions">
+                <button style="margin-top: 10px; width: 100%" type="submit" class="btn btn-primary">Sign up</button>
+            </div>
         </aside>
     </form>
 </div>

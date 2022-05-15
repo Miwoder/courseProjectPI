@@ -7,11 +7,13 @@ import org.bstu.govoronok.service.PaymentService;
 import org.bstu.govoronok.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.validation.Valid;
 import java.util.UUID;
 
 
@@ -29,7 +31,10 @@ public class UserController {
     }
 
     @PostMapping("/signup")
-    public String addNewUser(@ModelAttribute("user") User user) {
+    public String addNewUser(@Valid @ModelAttribute("user") User user, Errors errors) {
+        if (errors.hasErrors()) {
+            return "authentication/signup";
+        }
         user.setPayment(paymentService.getPaymentByName("Cash"));
         userService.addNewUser(user);
         return "redirect:/authentication/confirmAlert";

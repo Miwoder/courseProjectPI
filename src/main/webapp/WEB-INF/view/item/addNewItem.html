@@ -59,18 +59,26 @@
     </div>
 </nav>
 <div class="container" style="background: #cce3ff">
-    <aside class="col-sm-4">
-        <form method="POST" th:object="${item}" th:action="@{/auctions/add/item}">
+    <form method="POST"
+          style="position: absolute; left: 50%; top: 50%; width: 40%; height: 75%;
+              transform: translate(-50%, -50%); padding: 10px; background: white; border-radius: 25px"
+          class="d-flex justify-content-center"
+          th:object="${item}" th:action="@{/auctions/add/item}">
+        <aside class="col-sm-12" style="padding-right: 30px; padding-left: 30px; padding-top: 10px">
+            <div style="font-size: 39px; width: 100%; text-align: center; padding-bottom: 33px">Item info</div>
+
             <div class="col-xs-4">
                 <label for="itemName" class="form-label">Item name: </label>
-                <input type="text" class="form-control" th:field="*{name}" id="itemName"/>
+                <input type="text" style="width: 100%;" class="form-control" th:field="*{name}" id="itemName"/>
                 <div style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name incorrect</div>
             </div>
             <br/>
             <div class="col-xs-4">
-                <label for="itemDescription" class="form-label">Item description: </label>
-                <input type="text" class="form-control" th:field="*{description}" id="itemDescription"/>
-                <div style="color: red" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Description incorrect</div>
+                <label for="description" class="form-label">Item description: </label>
+                <textarea class="form-control" rows="3" th:field="*{description}"></textarea>
+                <div style="color: red" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">
+                    Description incorrect
+                </div>
 
             </div>
             <br>
@@ -83,9 +91,11 @@
                     </div>
                 </select>
             </div>
-            <input type="submit" value="Next"/>
-        </form>
-    </aside>
+            <div class="form-actions">
+                <button style="margin-top: 10px; width: 100%" type="submit" class="btn btn-primary">Next</button>
+            </div>
+        </aside>
+    </form>
 </div>
 </body>
 </html>

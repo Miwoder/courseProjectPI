@@ -58,38 +58,45 @@
         </ul>
     </div>
 </nav>
-<div class="container" style="background: #cce3ff; font-size: large; height: 400px; width: 300px; position: absolute; left: 0;
-        right: 0; top: 0; bottom: 0; margin: auto; max-width: 100%; max-height: 100%; overflow: auto;">
+<div class="container" style="border-radius: 40px; font-size: large; height: 380px; width: 300px; position: absolute; left: 0;
+        right: 0; top: 0; bottom: 0; margin: auto; max-width: 100%; max-height: 100%; overflow: auto; background: white">
     <aside class="col-sm-4">
         <form method="POST" class="d-flex justify-content-center" th:action="@{/deposit}" th:object="${card}">
             <aside class="col-sm-6 col-md-12">
+                <br>
                 <label for="ccNumber" style="width: max-content">Credit Card #:</label>
-                <input type="text" th:field="*{ccNumber}"/>
-                <span class="validationError"
-                      style="color: red; width: max-content"
-                      th:if="${#fields.hasErrors('ccNumber')}"
-                      th:errors="*{ccNumber}">CC Num Error</span>
+                <input type="text" th:field="*{ccNumber}"
+                       style="font-size: 18px; width: 270px; padding: 0 10px; text-align: center;"/>
+                <label class="validationError"
+                       style="color: red; width: max-content"
+                       th:if="${#fields.hasErrors('ccNumber')}"
+                       th:errors="*{ccNumber}">CC Num Error</label>
                 <br/>
-                <label for="ccExpiration">Expiration: </label>
-                <input type="text" th:field="*{ccExpiration}"/>
-                <span class="validationError"
-                      style="color: red"
-                      th:if="${#fields.hasErrors('ccExpiration')}"
-                      th:errors="*{ccExpiration}">CC Expiration Error</span>
-                <br/>
-                <label for="ccCVV">CVV: </label>
-                <input type="password" th:field="*{ccCVV}"/>
-                <span class="validationError"
-                      style="color: red"
-                      th:if="${#fields.hasErrors('ccCVV')}"
-                      th:errors="*{ccCVV}">CC CVV Error</span>
-                <br/>
+
+                <div style=" display: flex;">
+                    <div style=" flex: 50%;">
+                        <label for="ccExpiration">Expiration: </label>
+                        <input type="text" th:field="*{ccExpiration}" style="width: 125px;"/>
+                    </div>
+                    <div style=" flex: 50%; margin-left: 20px">
+                        <label for="ccCVV">CVV: </label>
+                        <input type="password" th:field="*{ccCVV}" style="width: 125px;"/>
+                    </div>
+                </div>
+                <label class="validationError"
+                       style="color: red; width: max-content"
+                       th:if="${#fields.hasErrors('ccExpiration')}"
+                       th:errors="*{ccExpiration}">CC Expiration Error</label>
+                <label class="validationError"
+                       style="color: red; width: max-content"
+                       th:if="${#fields.hasErrors('ccCVV')}"
+                       th:errors="*{ccCVV}">CC CVV Error</label>
                 <label for="amount">Amount: </label>
-                <input type="text" name="amount" th:field="*{amount}"/>
-                <span class="validationError"
-                      style="color: red"
-                      th:if="${#fields.hasErrors('amount')}"
-                      th:errors="*{amount}">Amount Error</span>
+                <input type="text" name="amount" th:field="*{amount}" style="width: 270px;"/>
+                <label class="validationError"
+                       style="color: red; width: max-content"
+                       th:if="${#fields.hasErrors('amount')}"
+                       th:errors="*{amount}">Amount Error</label>
                 <br/>
                 <input class="btn btn-primary" style="margin-top: 10px" type="submit" value="Confirm"/>
             </aside>

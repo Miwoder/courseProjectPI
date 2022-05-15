@@ -3,8 +3,6 @@ package org.bstu.govoronok.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.bstu.govoronok.model.Auction;
-import org.bstu.govoronok.model.BetHistory;
-import org.bstu.govoronok.model.User;
 import org.bstu.govoronok.provider.SimpleDataProvider;
 import org.bstu.govoronok.service.*;
 import org.springframework.stereotype.Controller;
@@ -13,11 +11,10 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.math.BigDecimal;
 import java.security.Principal;
 import java.time.LocalDate;
+import java.util.Calendar;
 import java.util.List;
-import java.util.Optional;
 
 
 @Controller
@@ -72,8 +69,17 @@ public class AuctionController {
     }
 
     @GetMapping("/auctions/auction/{id}")
-    public String getWonAuctions(Model model, @PathVariable("id") Long auctionId) {
+    public String getAuction(Model model, @PathVariable("id") Long auctionId) {
+        Auction auction = auctionService.getAuctionById(auctionId).get();
         model.addAttribute("auction", auctionService.getAuctionById(auctionId));
+
+        LocalDate now = LocalDate.now();
+        Calendar calendar = Calendar.getInstance();
+
+        String expirationTime =(auction.getEndDate().getDayOfYear() - now.getDayOfYear()) + "days " +
+                (24 - calendar.get(Calendar.HOUR_OF_DAY)) + "hours";
+
+        model.addAttribute("expiredTime", expirationTime);
         return "/auction/auction";
     }
 

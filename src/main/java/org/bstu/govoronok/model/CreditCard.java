@@ -1,12 +1,10 @@
 package org.bstu.govoronok.model;
 
 import lombok.Data;
+import lombok.NonNull;
 import org.hibernate.validator.constraints.CreditCardNumber;
 
-import javax.validation.constraints.Digits;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Positive;
+import javax.validation.constraints.*;
 import java.math.BigDecimal;
 
 @Data
@@ -20,7 +18,7 @@ public class CreditCard {
     @Digits(integer=3, fraction=0, message="Invalid CVV")
     private String ccCVV;
 
-    @Min(value = 1L, message = "Amount should not be less than 1")
+//    @Min(value = 1L, message = "Amount should not be less than 1")
     @Positive(message = "Amount should not be less than 1")
     private BigDecimal amount = BigDecimal.valueOf(0);
 }

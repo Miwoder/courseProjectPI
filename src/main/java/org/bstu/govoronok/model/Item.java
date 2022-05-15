@@ -1,6 +1,7 @@
 package org.bstu.govoronok.model;
 
 
+import javax.validation.constraints.Max;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
@@ -9,6 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 
 @Getter
 @Setter
@@ -23,11 +25,11 @@ public class Item {
     private Long id;
 
     @Column(name = "name", nullable = false)
-    @NotBlank(message = "name can't be empty")
+    @NotBlank(message = "Name can't be empty")
     private String name;
 
     @Column(name = "description", nullable = false)
-    @NotBlank(message = "description can't be empty")
+    @NotBlank(message = "Description can't be empty")
     private String description;
 
     @ManyToOne(optional = false, cascade = CascadeType.MERGE)

@@ -112,7 +112,6 @@ public class AuctionService {
     public List<Auction> getAuctionsByKey(String key) {
         List<Auction> auctions = new ArrayList<>();
         auctions.addAll(auctionRepository.findByKeyword(key));
-        auctions.addAll(auctionRepository.getAuctionsByItem_DescriptionLike(key));
         return auctions;
     }
 

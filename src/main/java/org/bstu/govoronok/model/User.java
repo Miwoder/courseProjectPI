@@ -24,9 +24,9 @@ public class User {
     @Column(name = "id", nullable = false)
     private Long id;
 
-//    @Column(name = "password", nullable = false)
-//    @NotBlank(message = "Password can't be empty")
-//    @Min(value = 6, message = "Password length can't be less then 6 symbols")
+    @Column(name = "password", nullable = false)
+    @NotBlank(message = "Password can't be empty")
+    @Min(value = 6, message = "Password length can't be less then 6 symbols")
     private String password;
 
     @Enumerated(EnumType.STRING)
@@ -36,23 +36,21 @@ public class User {
     @Column(name = "approved", nullable = false)
     private Boolean approved = Boolean.FALSE;
 
-//    @Column(name = "name", nullable = false)
-//    @NotBlank(message = "Name can't be empty")
-//    @Min(value = 2, message = "Name length can't be less then 2 symbols")
+    @Column(name = "name", nullable = false)
+    @NotBlank(message = "Name can't be empty")
     private String name;
 
-//    @Column(name = "surname", nullable = false)
-//    @NotBlank(message = "Surname can't be empty")
-//    @Min(value = 2, message = "Surname length can't be less then 2 symbols")
+    @Column(name = "surname", nullable = false)
+    @NotBlank(message = "Surname can't be empty")
     private String surname;
 
     @Column(name = "email", nullable = false)
+    @NotBlank(message = "Email can't be empty")
     @Email(message = "Incorrect email")
     private String email;
 
     @Column(name = "phone", nullable = false)
     @NotBlank(message = "Phone can't be empty")
-    @Min(value = 7, message = "Phone length can't be less then 7 symbols")
     private String phone;
 
     @Column(name = "balance", nullable = false)

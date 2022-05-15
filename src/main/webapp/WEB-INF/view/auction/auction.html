@@ -75,19 +75,20 @@
 
         <div class="col-sm-4">
             <br>
+            <hr size="6">
             <span style="padding-right: 10px" th:text="${auction.get().getItem().getDescription()}"></span>
         </div>
 
-        <div class="col-sm-6">
+        <div class="col-sm-4">
+            <br>
+            <h4 style="font-size: xx-large">Place name: </h4>
+            <span style="font-size: x-large" th:text="${auction.get().getPlace().getName()}"></span>
             <br>
             <h4 style="font-size: xx-large">Winner: </h4>
             <span style="font-size: x-large">
                 <span th:text="${auction.get().getUser().getName()}"></span>
                 <span th:text="${auction.get().getUser().getSurname()}"></span>
             </span>
-            <br>
-            <h4 style="font-size: xx-large">Place name: </h4>
-            <span style="font-size: x-large" th:text="${auction.get().getPlace().getName()}"></span>
             <br>
             <h4 style="font-size: xx-large">High bet: </h4>
             <span style="font-size: x-large" th:text="${auction.get().getHighBet()}+'$'"></span>
@@ -101,17 +102,27 @@
 
         </div>
 
-        <div class="col-sm-2">
+        <div class="col-sm-4">
             <br>
             <br>
-            <div style="text-align: center">
-                <label for="startDate">Start:</label>
+            <div style="text-align: left; font-size: x-large">
+                <b>
+                    <label for="startDate">Start:</label>
+                </b>
                 <span id="startDate" th:text="${auction.get().getStartDate()}"></span>
             </div>
-            <br>
-            <div style="text-align: center">
-                <label for="endDate">End:</label>
+            <div style="text-align: left; font-size: x-large">
+                <b>
+                    <label for="endDate">End:</label>
+                </b>
                 <span id="endDate" th:text="${auction.get().getEndDate()}"></span>
+            </div>
+            <hr size="4">
+            <div style="text-align: left; font-size: x-large">
+                <b>
+                    <label for="leftDate">Left:</label>
+                </b>
+                <span id="leftDate" th:text="${expiredTime}"></span>
             </div>
         </div>
 

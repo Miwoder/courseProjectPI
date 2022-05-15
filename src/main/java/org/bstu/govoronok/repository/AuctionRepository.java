@@ -16,9 +16,6 @@ public interface AuctionRepository extends JpaRepository<Auction, Long> {
             nativeQuery = true)
     List<Auction> findByKeyword(@Param("keyword") String keyword);
 
-    List<Auction> getAuctionsByItem_NameLike(String keyword);
-    List<Auction> getAuctionsByItem_DescriptionLike(String keyword);
-
     List<Auction> getAllByAuctionStatus_NameIsNotAndAuctionStatus_NameIsNot(String status, String status2);
 
     List<Auction> getAuctionsByAuctionStatus_Name(String name);
