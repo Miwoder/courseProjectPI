@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Success</title>
+    <title th:text="#{confirm}"></title>
 </head>
-<body>
-    <h1>CHECK YOUR EMAIL TO CONFIRM</h1>
-    <h3>Don't forget about spam</h3>
+<body th:style="'background: url(/images/background.jpg) no-repeat; background-size: 100%;'">
+    <h1 th:text="#{alert.email.confirm}"></h1>
+    <h3 th:text="#{alert.email.confirm.tip}"></h3>
 </body>
 </html>

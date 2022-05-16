@@ -12,39 +12,52 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.js"></script>
 
-    <title>SIGN IN</title>
+    <title th:text="#{login}"></title>
 </head>
 <body th:style="'background: url(/images/signin.jpg) no-repeat; background-size: 100%;'">
+
+<div>
+    <a href="?lang=en"><img style="width: 30px; margin-left: 10px; margin-top: 10px;" th:src="@{/images/uk.png}"></a>
+</div>
+<div>
+    <a href="?lang=ru"><img style="width: 30px; margin-left: 10px; margin-right: 20px"
+                            th:src="@{/images/russia.png}"></a>
+</div>
+
 <div class="container">
+
+
     <form style="position: absolute; left: 50%; top: 50%; width: 40%; height: 65%; transform: translate(-50%, -50%);
     padding: 10px; background: white; border-radius: 25px"
           class="d-flex justify-content-center" method="POST" th:name="f"
           th:action="@{/signin}">
         <aside class="col-sm-12" style="padding-right: 30px; padding-left: 30px; padding-top: 10px">
-            <div style="font-size: 39px; width: 100%; text-align: center; padding-bottom: 53px">Sign in</div>
+            <div style="font-size: 39px; width: 100%; text-align: center; padding-bottom: 53px"
+                 th:text="#{login}"></div>
 
             <div class="col-xs-4">
                 <div th:if="${param.error}" style="text-align: center; width: 100%; color: red;"
-                     class="alert alert-error"> Invalid email/password or user unconfirmed</div>
-                <div th:if="${param.logout}" class="alert alert-success"> You have been logged out</div>
-                <label for="username" class="form-label">Email</label>
+                     class="alert alert-error" th:text="#{authentication.fail}"></div>
+                <div th:if="${param.logout}" class="alert alert-success" th:text="#{logout.alert}"></div>
+                <label for="username" class="form-label" th:text="#{email}"></label>
                 <input type="email" class="form-control" id="username" name="username" aria-describedby="emailHelp">
-                <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                <div id="emailHelp" class="form-text" th:text="#{email.tip}"></div>
 
             </div>
             <div class="col-xs-4">
 
-                <label for="password" class="form-label">Password</label>
-                <a href="/authentication/forgot_password">Forgot?</a>
+                <label for="password" class="form-label" th:text="#{password}"></label>
+                <a href="/authentication/forgot_password" th:text="#{password.forgot}"></a>
                 <input type="password" class="form-control" id="password" name="password">
 
             </div>
 
             <div class="form-actions">
-                <button style="margin-top: 10px; width: 100%" type="submit" class="btn btn-primary">Sign in</button>
+                <button style="margin-top: 10px; width: 100%" type="submit" class="btn btn-primary"
+                        th:text="#{login}"></button>
             </div>
 
-            <a style="" href="signup">Sign up</a>
+            <a style="" href="signup" th:text="#{registration}"></a>
         </aside>
     </form>
 </div>

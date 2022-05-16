@@ -13,59 +13,65 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.js"></script>
 
-    <title>Auction info</title>
+    <title th:text="#{auctions.info.button}"></title>
 </head>
-<body style="background: #cce3ff">
+<body th:style="'background: url(/images/background.jpg) no-repeat; background-size: 100%;'">
 <nav class="navbar navbar-expand-lg navbar-light bg-info d-flex">
-    <a style="margin-left: 100px" class="navbar-brand" href="/home">Home</a>
+    <a style="margin-left: 100px" class="navbar-brand" href="/home" th:text="#{home}"></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <div class="collapse navbar-collapse" style="justify-content: space-between;" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="/auctions/all" id="navbarDropdownMenuLink"
-                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Auctions
+                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" th:text="#{auctions}">
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    <a class="dropdown-item" href="/auctions/all">All auctions</a>
-                    <a class="dropdown-item" href="/auctions/ssd">Auctions for SSD</a>
-                    <a class="dropdown-item" href="/auctions/power_supplies">Auctions for power supplies</a>
-                    <a class="dropdown-item" href="/auctions/video_cards">Auctions for video cards</a>
-                    <a class="dropdown-item" href="/auctions/hard_disks">Auctions for hard disks</a>
-                    <a class="dropdown-item" href="/auctions/sound_cards">Auctions for sound cards</a>
-                    <a class="dropdown-item" href="/auctions/corps">Auctions for corps</a>
-                    <a class="dropdown-item" href="/auctions/motherboards">Auctions for motherboards</a>
-                    <a class="dropdown-item" href="/auctions/ram">Auctions for RAM</a>
-                    <a class="dropdown-item" href="/auctions/optical_drive">Auctions for optical drive</a>
-                    <a class="dropdown-item" href="/auctions/processors">Auctions for processors</a>
+                    <a class="dropdown-item" href="/auctions/all" th:text="#{auctions.all}"></a>
+                    <a class="dropdown-item" href="/auctions/ssd" th:text="#{auctions.ssd}"></a>
+                    <a class="dropdown-item" href="/auctions/power_supplies" th:text="#{auctions.powerSupply}"></a>
+                    <a class="dropdown-item" href="/auctions/video_cards" th:text="#{auctions.videoCard}"></a>
+                    <a class="dropdown-item" href="/auctions/hard_disks" th:text="#{auctions.hardDisk}"></a>
+                    <a class="dropdown-item" href="/auctions/sound_cards" th:text="#{auctions.soundCard}"></a>
+                    <a class="dropdown-item" href="/auctions/corps" th:text="#{auctions.corp}"></a>
+                    <a class="dropdown-item" href="/auctions/motherboards" th:text="#{auctions.motherBoard}"></a>
+                    <a class="dropdown-item" href="/auctions/ram" th:text="#{auctions.ram}"></a>
+                    <a class="dropdown-item" href="/auctions/optical_drive" th:text="#{auctions.opticalDrive}"></a>
+                    <a class="dropdown-item" href="/auctions/processors" th:text="#{auctions.processor}"></a>
                 </div>
             </li>
             <li class="nav-item active">
-                <a class="nav-link" href="/auctions/add/item">Create auction</a>
+                <a class="nav-link" href="/auctions/add/item" th:text="#{auction.create.button}"></a>
             </li>
             <li class="nav-item active">
-                <a class="nav-link" href="/places/">Places</a>
+                <a class="nav-link" href="/places/" th:text="#{places}"></a>
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink2" data-toggle="dropdown"
-                   aria-haspopup="true" aria-expanded="false">
-                    My page
-                </a>
+                   aria-haspopup="true" aria-expanded="false" th:text="#{myPage}"></a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink2">
-                    <a class="dropdown-item" href="/my">My page</a>
-                    <a class="dropdown-item" href="/my/won">My won auctions</a>
-                    <a class="dropdown-item" href="/my/auctions">My all auctions</a>
-                    <a class="dropdown-item" href="/deposit">Deposit</a>
+                    <a class="dropdown-item" href="/my" th:text="#{myPage}"></a>
+                    <a class="dropdown-item" href="/my/won" th:text="#{myWonAuctions}"></a>
+                    <a class="dropdown-item" href="/my/auctions" th:text="#{myAllAuctions}"></a>
+                    <a class="dropdown-item" href="/deposit" th:text="#{deposit}"></a>
                 </div>
+            </li>
+        </ul>
+
+        <ul class="navbar-nav mr-auto">
+            <li>
+                <a href="?lang=en"><img style="width: 30px;" th:src="@{/images/uk.png}"></a>
+            </li>
+            <li>
+                <a href="?lang=ru"><img style="width: 30px; margin-left: 10px; margin-right: 20px" th:src="@{/images/russia.png}"></a>
             </li>
         </ul>
     </div>
 </nav>
-<div class="container" style="background: #cce3ff">
+<div class="container">
     <div class="row" th:object="${auction}">
         <h1 style="text-align: center; margin-top: revert; font-size: xxx-large;"
             th:text="'Auction #' + ${auction.get().getId()}"></h1>
@@ -81,23 +87,23 @@
 
         <div class="col-sm-4">
             <br>
-            <h4 style="font-size: xx-large">Place name: </h4>
+            <h4 style="font-size: xx-large" th:text="#{auction.place}"></h4>
             <span style="font-size: x-large" th:text="${auction.get().getPlace().getName()}"></span>
             <br>
-            <h4 style="font-size: xx-large">Winner: </h4>
+            <h4 style="font-size: xx-large" th:text="#{auction.winner}"></h4>
             <span style="font-size: x-large">
                 <span th:text="${auction.get().getUser().getName()}"></span>
                 <span th:text="${auction.get().getUser().getSurname()}"></span>
             </span>
             <br>
-            <h4 style="font-size: xx-large">High bet: </h4>
+            <h4 style="font-size: xx-large" th:text="#{auctions.highBet}"></h4>
             <span style="font-size: x-large" th:text="${auction.get().getHighBet()}+'$'"></span>
             <br>
             <br>
             <form th:method="PATCH" th:action="@{/auctions/auction/{id}(id=${id})}">
-                <label>(US)$ </label>
-                <input type="text" name="bet" style="padding: 6px 10px; line-height: 1px;"/>
-                <input type="submit" class="btn btn-primary" value="Place bid"/>
+                <label th:text="#{auction.dollar}"></label>
+                <input type="text" class="form-control" name="bet" style="padding: 6px 10px; line-height: 1px;"/>
+                <input type="submit" class="btn btn-primary" th:value="#{auction.bet.button}" />
             </form>
 
         </div>
@@ -107,20 +113,20 @@
             <br>
             <div style="text-align: left; font-size: x-large">
                 <b>
-                    <label for="startDate">Start:</label>
+                    <label for="startDate" th:text="#{auctions.start}"></label>
                 </b>
                 <span id="startDate" th:text="${auction.get().getStartDate()}"></span>
             </div>
             <div style="text-align: left; font-size: x-large">
                 <b>
-                    <label for="endDate">End:</label>
+                    <label for="endDate" th:text="#{auctions.end}"></label>
                 </b>
                 <span id="endDate" th:text="${auction.get().getEndDate()}"></span>
             </div>
             <hr size="4">
             <div style="text-align: left; font-size: x-large">
                 <b>
-                    <label for="leftDate">Left:</label>
+                    <label for="leftDate" th:text="#{auction.left}"></label>
                 </b>
                 <span id="leftDate" th:text="${expiredTime}"></span>
             </div>

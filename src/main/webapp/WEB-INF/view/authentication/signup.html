@@ -12,9 +12,18 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.js"></script>
 
-    <title>New user</title>
+    <title th:text="#{registration}"></title>
 </head>
 <body th:style="'background: url(/images/signin.jpg) no-repeat; background-size: 100%;'">
+
+<div>
+    <a href="?lang=en"><img style="width: 30px; margin-left: 10px; margin-top: 10px;" th:src="@{/images/uk.png}"></a>
+</div>
+<div>
+    <a href="?lang=ru"><img style="width: 30px; margin-left: 10px; margin-right: 20px"
+                            th:src="@{/images/russia.png}"></a>
+</div>
+
 <div class="container">
     <form method="POST" style="position: absolute; left: 50%; top: 50%; width: 40%; height: 92%; transform: translate(-50%, -50%);
     padding: 10px; background: white; border-radius: 25px" class="d-flex justify-content-center"
@@ -24,42 +33,45 @@
 
             <div class="col-xs-4">
 
-                <label for="firstName" class="form-label">First name: </label>
+                <label for="firstName" class="form-label" th:text="#{firstName}"></label>
                 <input type="text" th:field="*{name}" class="form-control" id="firstName"/>
                 <label class="validationError"
                        style="color: red; width: max-content"
                        th:if="${#fields.hasErrors('name')}"
-                       th:errors="*{name}">Amount Error</label>                <br/>
-                <label for="lastName" class="form-label">Last name: </label>
+                       th:errors="*{name}" th:text="#{firstName.error}"></label>
+                <br/>
+                <label for="lastName" class="form-label" th:text="#{lastName}"></label>
                 <input type="text" th:field="*{surname}" class="form-control" id="lastName"/>
                 <label class="validationError"
                        style="color: red; width: max-content"
                        th:if="${#fields.hasErrors('surname')}"
-                       th:errors="*{surname}">Amount Error</label>                <br/>
-                <label for="email" class="form-label">Email: </label>
+                       th:errors="*{surname}" th:text="#{lastName.error}"></label>
+                <br/>
+                <label for="email" class="form-label" th:text="#{email}"></label>
                 <input type="text" th:field="*{email}" class="form-control" id="email"/>
                 <label class="validationError"
                        style="color: red; width: max-content"
                        th:if="${#fields.hasErrors('email')}"
-                       th:errors="*{email}">Amount Error</label>                <br/>
-                <label for="password" class="form-label">Password: </label>
+                       th:errors="*{email}" th:text="#{email.erorr}"></label>
+                <br/>
+                <label for="password" class="form-label" th:text="#{password}"></label>
                 <input type='password' th:field="*{password}" class="form-control" id="password"/>
                 <label class="validationError"
                        style="color: red; width: max-content"
                        th:if="${#fields.hasErrors('password')}"
-                       th:errors="*{password}">Amount Error</label>                <br/>
-                <label for="phone" class="form-label">Phone: </label>
+                       th:errors="*{password}" th:text="#{password.error1}"></label>                <br/>
+                <label for="phone" class="form-label" th:text="#{phone}"></label>
                 <input type='text' th:field="*{phone}" class="form-control" id="phone"/>
                 <label class="validationError"
                        style="color: red; width: max-content"
                        th:if="${#fields.hasErrors('phone')}"
-                       th:errors="*{phone}">Amount Error</label>
+                       th:errors="*{phone}" th:text="#{phone.error}"></label>
                 <br/>
 
             </div>
 
             <div class="form-actions">
-                <button style="margin-top: 10px; width: 100%" type="submit" class="btn btn-primary">Sign up</button>
+                <button style="margin-top: 10px; width: 100%" type="submit" class="btn btn-primary" th:text="#{registration}"></button>
             </div>
         </aside>
     </form>

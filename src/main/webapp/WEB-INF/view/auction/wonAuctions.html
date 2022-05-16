@@ -13,79 +13,86 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.js"></script>
 
-    <title>Auctions</title>
+    <title th:text="#{myWonAuctions}"></title>
 </head>
-<body style="background: #cce3ff">
+<body th:style="'background: url(/images/background.jpg) no-repeat; background-size: 100%;'">
 <nav class="navbar navbar-expand-lg navbar-light bg-info d-flex">
-    <a style="margin-left: 100px" class="navbar-brand" href="/home">Home</a>
+    <a style="margin-left: 100px" class="navbar-brand" href="/home" th:text="#{home}"></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <div class="collapse navbar-collapse" style="justify-content: space-between;" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="/auctions/all" id="navbarDropdownMenuLink"
-                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Auctions
+                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" th:text="#{auctions}">
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    <a class="dropdown-item" href="/auctions/all">All auctions</a>
-                    <a class="dropdown-item" href="/auctions/ssd">Auctions for SSD</a>
-                    <a class="dropdown-item" href="/auctions/power_supplies">Auctions for power supplies</a>
-                    <a class="dropdown-item" href="/auctions/video_cards">Auctions for video cards</a>
-                    <a class="dropdown-item" href="/auctions/hard_disks">Auctions for hard disks</a>
-                    <a class="dropdown-item" href="/auctions/sound_cards">Auctions for sound cards</a>
-                    <a class="dropdown-item" href="/auctions/corps">Auctions for corps</a>
-                    <a class="dropdown-item" href="/auctions/motherboards">Auctions for motherboards</a>
-                    <a class="dropdown-item" href="/auctions/ram">Auctions for RAM</a>
-                    <a class="dropdown-item" href="/auctions/optical_drive">Auctions for optical drive</a>
-                    <a class="dropdown-item" href="/auctions/processors">Auctions for processors</a>
+                    <a class="dropdown-item" href="/auctions/all" th:text="#{auctions.all}"></a>
+                    <a class="dropdown-item" href="/auctions/ssd" th:text="#{auctions.ssd}"></a>
+                    <a class="dropdown-item" href="/auctions/power_supplies" th:text="#{auctions.powerSupply}"></a>
+                    <a class="dropdown-item" href="/auctions/video_cards" th:text="#{auctions.videoCard}"></a>
+                    <a class="dropdown-item" href="/auctions/hard_disks" th:text="#{auctions.hardDisk}"></a>
+                    <a class="dropdown-item" href="/auctions/sound_cards" th:text="#{auctions.soundCard}"></a>
+                    <a class="dropdown-item" href="/auctions/corps" th:text="#{auctions.corp}"></a>
+                    <a class="dropdown-item" href="/auctions/motherboards" th:text="#{auctions.motherBoard}"></a>
+                    <a class="dropdown-item" href="/auctions/ram" th:text="#{auctions.ram}"></a>
+                    <a class="dropdown-item" href="/auctions/optical_drive" th:text="#{auctions.opticalDrive}"></a>
+                    <a class="dropdown-item" href="/auctions/processors" th:text="#{auctions.processor}"></a>
                 </div>
             </li>
             <li class="nav-item active">
-                <a class="nav-link" href="/auctions/add/item">Create auction</a>
+                <a class="nav-link" href="/auctions/add/item" th:text="#{auction.create.button}"></a>
             </li>
             <li class="nav-item active">
-                <a class="nav-link" href="/places/">Places</a>
+                <a class="nav-link" href="/places/" th:text="#{places}"></a>
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink2" data-toggle="dropdown"
-                   aria-haspopup="true" aria-expanded="false">
-                    My page
-                </a>
+                   aria-haspopup="true" aria-expanded="false" th:text="#{myPage}"></a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink2">
-                    <a class="dropdown-item" href="/my">My page</a>
-                    <a class="dropdown-item" href="/my/won">My won auctions</a>
-                    <a class="dropdown-item" href="/my/auctions">My all auctions</a>
-                    <a class="dropdown-item" href="/deposit">Deposit</a>
+                    <a class="dropdown-item" href="/my" th:text="#{myPage}"></a>
+                    <a class="dropdown-item" href="/my/won" th:text="#{myWonAuctions}"></a>
+                    <a class="dropdown-item" href="/my/auctions" th:text="#{myAllAuctions}"></a>
+                    <a class="dropdown-item" href="/deposit" th:text="#{deposit}"></a>
                 </div>
             </li>
         </ul>
+
+        <ul class="navbar-nav mr-auto">
+            <li>
+                <a href="?lang=en"><img style="width: 30px;" th:src="@{/images/uk.png}"></a>
+            </li>
+            <li>
+                <a href="?lang=ru"><img style="width: 30px; margin-left: 10px; margin-right: 20px" th:src="@{/images/russia.png}"></a>
+            </li>
+        </ul>
     </div>
-</nav><div class="container">
+</nav>
+<div class="container">
     <div class="row">
         <div class="card" style="width: 18rem; border-radius: 20px; margin: 15px; " th:each="auction: ${auctions}">
             <div class="card-body">
-                <h3 style="text-align: center" class="card-title" th:text="Auction + ' #' + ${auction.getId()}"></h3>
-                <label style="font-size: large" for="itemName">Item:</label>
+                <h3 style="text-align: center" class="card-title" th:text="#{auction} + ' #' + ${auction.getId()}"></h3>
+                <label style="font-size: large" for="itemName" th:text="#{auctions.item.name}"></label>
                 <span id="itemName" th:text="${auction.getItem().getName()}"></span>
                 <br>
-                <label style="font-size: large" for="startDate">Start:</label>
+                <label style="font-size: large" for="startDate" th:text="#{auctions.start}"></label>
                 <span id="startDate" th:text="${auction.getStartDate()}"></span>
                 <br>
-                <label style="font-size: large" for="endDate">Ends:</label>
+                <label style="font-size: large" for="endDate" th:text="#{auctions.end}"></label>
                 <span id="endDate" th:text="${auction.getEndDate()}"></span>
                 <br>
-                <label style="font-size: large" for="highBet">High bet:</label>
+                <label style="font-size: large" for="highBet" th:text="#{auctions.highBet}"></label>
                 <span id="highBet" th:text="${auction.getHighBet()}+'$'"></span>
                 <br>
-                <label style="font-size: large" for="place">Place name:</label>
+                <label style="font-size: large" for="place" th:text="#{auctions.placeName}"></label>
                 <span id="place" th:text="${auction.getPlace().getName()}"></span>
                 <br>
                 <form th:method="GET" th:action="@{/auctions/auction/{id}(id=${auction.getId()})}">
-                    <input class="btn btn-primary" type="submit" value="Auction info"/>
+                    <input class="btn btn-primary" type="submit" th:text="#{auctions.info.button}"/>
                 </form>
             </div>
         </div>
