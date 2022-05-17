@@ -59,6 +59,7 @@
                     <a class="dropdown-item" href="/my/won" th:text="#{myWonAuctions}"></a>
                     <a class="dropdown-item" href="/my/auctions" th:text="#{myAllAuctions}"></a>
                     <a class="dropdown-item" href="/deposit" th:text="#{deposit}"></a>
+                    <a class="dropdown-item" href="/logout" th:text="#{logout}"></a>
                 </div>
             </li>
         </ul>
@@ -101,10 +102,10 @@
             <td style="border-width: 0px 1px;" th:text="${auction.getUser().getEmail()}"/>
             <td>
                 <form th:method="DELETE" th:action="@{/administration/{id}(id=${auction.getId()})}">
-                    <input class="btn btn-danger" type="submit" th:text="#{admin.delete}" />
+                    <input class="btn btn-danger" type="submit" th:value="#{admin.delete}" />
                 </form>
                 <form th:method="PATCH" th:action="@{/administration/{id}(id=${auction.getId()})}">
-                    <input style="margin: 5px 0" class="btn btn-success" type="submit"  th:text="#{admin.approve}"/>
+                    <input style="margin: 5px 0" class="btn btn-success" type="submit"  th:value="#{admin.approve}"/>
                 </form>
             </td>
         </tr>

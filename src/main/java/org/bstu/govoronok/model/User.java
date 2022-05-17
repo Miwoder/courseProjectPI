@@ -25,8 +25,8 @@ public class User {
     private Long id;
 
     @Column(name = "password", nullable = false)
-    @NotBlank(message = "Password can't be empty")
-    @Min(value = 6, message = "Password length can't be less then 6 symbols")
+    @NotBlank(message = "{password.error2}")
+    @Min(value = 6, message = "{password.error1}")
     private String password;
 
     @Enumerated(EnumType.STRING)
@@ -37,20 +37,20 @@ public class User {
     private Boolean approved = Boolean.FALSE;
 
     @Column(name = "name", nullable = false)
-    @NotBlank(message = "Name can't be empty")
+    @NotBlank(message = "{firstName.error}")
     private String name;
 
     @Column(name = "surname", nullable = false)
-    @NotBlank(message = "Surname can't be empty")
+    @NotBlank(message = "{lastName.error}")
     private String surname;
 
     @Column(name = "email", nullable = false)
-    @NotBlank(message = "Email can't be empty")
-    @Email(message = "Incorrect email")
+    @NotBlank(message = "{email.erorr}")
+    @Email(message = "{email.erorr}")
     private String email;
 
     @Column(name = "phone", nullable = false)
-    @NotBlank(message = "Phone can't be empty")
+    @NotBlank(message = "{phone.error}")
     private String phone;
 
     @Column(name = "balance", nullable = false)

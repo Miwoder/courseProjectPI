@@ -25,11 +25,11 @@ public class Item {
     private Long id;
 
     @Column(name = "name", nullable = false)
-    @NotBlank(message = "Name can't be empty")
+    @NotBlank(message = "{item.name.error}")
     private String name;
 
     @Column(name = "description", nullable = false)
-    @NotBlank(message = "Description can't be empty")
+    @NotBlank(message = "{item.description.error}")
     private String description;
 
     @ManyToOne(optional = false, cascade = CascadeType.MERGE)

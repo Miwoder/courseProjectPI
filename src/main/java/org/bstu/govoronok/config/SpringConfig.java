@@ -10,6 +10,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
@@ -105,5 +106,12 @@ public class SpringConfig implements WebMvcConfigurer {
         messageSource.setDefaultEncoding("UTF-8");
         messageSource.setCacheSeconds(5);
         return messageSource;
+    }
+
+    @Bean
+    public LocalValidatorFactoryBean getValidator() {
+        LocalValidatorFactoryBean bean = new LocalValidatorFactoryBean();
+        bean.setValidationMessageSource(messageSource());
+        return bean;
     }
 }

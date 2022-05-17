@@ -24,7 +24,7 @@ public class Auction {
     private Long id;
 
     @Column(name = "startBet", nullable = false)
-    @NotBlank(message = "Start bet can't be empty")
+    @NotBlank(message = "{auction.startBet.error}")
     private String startBet;
 
     @Column(name = "highBet", nullable = false)
