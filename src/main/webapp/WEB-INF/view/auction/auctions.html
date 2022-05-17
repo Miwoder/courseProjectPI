@@ -62,8 +62,8 @@
             </li>
             <li>
                 <form method="GET" th:object="${simpleDataProvider}" style="margin-left: 25px" class="d-flex" th:action="@{/auctions/find}">
-                    <input class="form-control me-2" type="search" th:placeholder="#{search}" th:field="*{textField}" aria-label="Search">
-                    <button class="btn btn-outline-success" th:value="#{search}" type="submit"></button>
+                    <input class="form-control me-2"  th:placeholder="#{search}" th:field="*{textField}">
+                    <button class="btn btn-outline-success" type="submit"><span th:text="#{search}"></span></button>
                 </form>
             </li>
         </ul>
