@@ -75,24 +75,24 @@
     <div class="row">
         <div class="card" style="width: 18rem; border-radius: 20px; margin: 15px; " th:each="auction: ${auctions}">
             <div class="card-body">
-                <h3 style="text-align: center" class="card-title" th:text="Auction + ' #' + ${auction.getId()}"></h3>
-                <label style="font-size: large" for="itemName">Item:</label>
+                <h3 style="text-align: center" class="card-title" th:text="#{auctionsNumber} + ${auction.getId()}"></h3>
+                <label style="font-size: large" for="itemName" th:text="#{auctions.item.name}"></label>
                 <span id="itemName" th:text="${auction.getItem().getName()}"></span>
                 <br>
-                <label style="font-size: large" for="startDate">Start:</label>
+                <label style="font-size: large" for="startDate" th:text="#{auctions.start}"></label>
                 <span id="startDate" th:text="${auction.getStartDate()}"></span>
                 <br>
-                <label style="font-size: large" for="endDate">Ends:</label>
+                <label style="font-size: large" for="endDate" th:text="#{auctions.end}"></label>
                 <span id="endDate" th:text="${auction.getEndDate()}"></span>
                 <br>
-                <label style="font-size: large" for="highBet">High bet:</label>
+                <label style="font-size: large" for="highBet" th:text="#{auctions.highBet}"></label>
                 <span id="highBet" th:text="${auction.getHighBet()}+'$'"></span>
                 <br>
-                <label style="font-size: large" for="place">Place name:</label>
+                <label style="font-size: large" for="place" th:text="#{auctions.placeName}"></label>
                 <span id="place" th:text="${auction.getPlace().getName()}"></span>
                 <br>
                 <form th:method="GET" th:action="@{/auctions/auction/{id}(id=${auction.getId()})}">
-                    <input class="btn btn-primary" type="submit" value="Auction info"/>
+                    <input class="btn btn-primary" type="submit" style="width: 100%;" th:value="#{auctions.info.button}"/>
                 </form>
             </div>
         </div>

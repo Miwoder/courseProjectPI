@@ -92,7 +92,7 @@
                 <span id="place" th:text="${auction.getPlace().getName()}"></span>
                 <br>
                 <form th:method="GET" th:action="@{/auctions/auction/{id}(id=${auction.getId()})}">
-                    <input class="btn btn-primary" type="submit" th:text="#{auctions.info.button}"/>
+                    <input class="btn btn-primary" type="submit" style="width: 100%" th:value="#{auctions.info.button}"/>
                 </form>
             </div>
         </div>

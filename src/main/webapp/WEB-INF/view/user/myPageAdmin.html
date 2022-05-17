@@ -62,12 +62,6 @@
                     <a class="dropdown-item" href="/deposit" th:text="#{deposit}"></a>
                 </div>
             </li>
-            <li>
-                <a href="?lang=en"><img style="width: 30px; margin-left: 10px; margin-top: 10px;" th:src="@{/images/uk.png}"></a>
-            </li>
-            <li>
-                <a href="?lang=ru"><img style="width: 30px; margin-left: 10px; margin-top: 10px;" th:src="@{/images/russia.png}"></a>
-            </li>
         </ul>
 
         <ul class="navbar-nav mr-auto">
@@ -81,7 +75,7 @@
     </div>
 </nav>
 <div class="container">
-    <h1 style="margin: revert; font-size: xxx-large;">My profile</h1>
+    <h1 style="margin: revert; font-size: xxx-large;" th:text="#{myProfile}"></h1>
 
     <div class="row" style="margin-top: 30px" th:object="${user}">
         <div class="col-sm-4">
@@ -111,7 +105,7 @@
     </div>
     <div class="row">
         <div class="col-sm-8">
-            <h2> Statistics: </h2>
+            <h2 th:text="#{statistics}"></h2>
             <div th:text="#{totalNumberOfAuctionsWon} + ${numberOfWonAuctions}"></div>
             <div th:text="#{totalNumberOfAuctionsWonInALastMonth} + ${numberOfWonAuctionsForLastMonth}"></div>
             <div th:text="#{maxBet} + ${maxBet}"></div>
@@ -121,10 +115,10 @@
     </div>
     <br/>
     <form th:method="PATCH" th:action="@{/my}">
-        <input type="submit" class="btn btn-primary" th:text="#{changeAnotherMethod}"/>
+        <input type="submit" class="btn btn-primary" th:value="#{changeAnotherMethod}"/>
     </form>
     <form style="margin-top: 10px" th:method="PATCH" th:action="@{/administration/updateStatuses}">
-        <input type="submit" class="btn btn-primary" th:text="#{updateStatuses}"/>
+        <input type="submit" class="btn btn-primary" th:value="#{updateStatuses}"/>
     </form>
 </div>
 </body>

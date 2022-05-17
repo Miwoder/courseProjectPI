@@ -74,7 +74,7 @@
 <div class="container">
     <div class="row" th:object="${auction}">
         <h1 style="text-align: center; margin-top: revert; font-size: xxx-large;"
-            th:text="'Auction #' + ${auction.get().getId()}"></h1>
+            th:text="#{auction} + ' #' + ${auction.get().getId()}"></h1>
         <h1 style="text-align: center; font-size: xxx-large;" th:text="${auction.get().getItem().getName()}"></h1>
         <br>
         <br>
@@ -103,7 +103,7 @@
             <form th:method="PATCH" th:action="@{/auctions/auction/{id}(id=${id})}">
                 <label th:text="#{auction.dollar}"></label>
                 <input type="text" class="form-control" name="bet" style="padding: 6px 10px; line-height: 1px;"/>
-                <input type="submit" class="btn btn-primary" th:value="#{auction.bet.button}" />
+                <input type="submit" class="btn btn-primary" style="margin-top: 15px; width: 100%;" th:value="#{auction.bet.button}" />
             </form>
 
         </div>
