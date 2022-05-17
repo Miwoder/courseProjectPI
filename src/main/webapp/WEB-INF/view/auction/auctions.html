@@ -60,7 +60,14 @@
                     <a class="dropdown-item" href="/logout" th:text="#{logout}"></a>
                 </div>
             </li>
+            <li>
+                <form method="GET" th:object="${simpleDataProvider}" style="margin-left: 25px" class="d-flex" th:action="@{/auctions/find}">
+                    <input class="form-control me-2" type="search" th:placeholder="#{search}" th:field="*{textField}" aria-label="Search">
+                    <button class="btn btn-outline-success" th:value="#{search}" type="submit"></button>
+                </form>
+            </li>
         </ul>
+
 
         <ul class="navbar-nav mr-auto">
             <li>
