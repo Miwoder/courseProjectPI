@@ -65,15 +65,16 @@
         </ul>
     </div>
 </nav>
-<div class="container" style="border-radius: 40px; font-size: large; height: 380px; width: 300px; position: absolute; left: 0;
-        right: 0; top: 0; bottom: 0; margin: auto; max-width: 100%; max-height: 100%; overflow: auto; background: white">
-    <aside class="col-sm-4">
-        <form method="POST" class="d-flex justify-content-center" th:action="@{/deposit}" th:object="${card}">
+<div class="container">
+        <form method="POST" style="position: absolute; left: 50%; top: 50%; width: 30%; height: 60%;
+              transform: translate(-50%, -50%); padding: 10px; background: white; border-radius: 25px"
+              class="d-flex justify-content-center" th:action="@{/deposit}" th:object="${card}">
             <aside class="col-sm-6 col-md-12">
-                <br>
+                <div style="font-size: 39px; width: 100%; text-align: center; padding-bottom: 33px"
+                     th:text="#{deposit}"></div>
                 <label for="ccNumber" style="width: max-content" th:text="#{creditCardNumber}"></label>
-                <input type="text" th:field="*{ccNumber}"
-                       style="font-size: 18px; width: 270px; padding: 0 10px; text-align: center;"/>
+                <input type="text" th:field="*{ccNumber}" class="form-control"
+                       style="font-size: 18px; width: 100%; padding: 0 10px; text-align: center;"/>
                 <label class="validationError"
                        style="color: red; width: max-content"
                        th:if="${#fields.hasErrors('ccNumber')}"
@@ -83,11 +84,11 @@
                 <div style=" display: flex;">
                     <div style=" flex: 50%;">
                         <label for="ccExpiration" th:text="#{expiration}"></label>
-                        <input type="text" th:field="*{ccExpiration}" style="width: 125px;"/>
+                        <input type="text" th:field="*{ccExpiration}" class="form-control" style="width: 100%;"/>
                     </div>
                     <div style=" flex: 50%; margin-left: 20px">
                         <label for="ccCVV" th:text="#{cvv}"></label>
-                        <input type="password" th:field="*{ccCVV}" style="width: 125px;"/>
+                        <input type="password" class="form-control" th:field="*{ccCVV}" style="width: 100%;"/>
                     </div>
                 </div>
                 <label class="validationError"
@@ -98,18 +99,17 @@
                        style="color: red; width: max-content"
                        th:if="${#fields.hasErrors('ccCVV')}"
                        th:errors="*{ccCVV}" th:text="#{cvv.error}">CC CVV Error</label>
-
+                <br>
                 <label for="amount" th:text="#{amount}"></label>
-                <input type="text" name="amount" th:field="*{amount}" style="width: 270px;"/>
+                <input type="text" name="amount" class="form-control" th:field="*{amount}" style="width: 100%;"/>
                 <label class="validationError"
                        style="color: red; width: max-content"
                        th:if="${#fields.hasErrors('amount')}"
                        th:errors="*{amount}" th:text="#{amount.error}">Amount Error</label>
                 <br/>
-                <input class="btn btn-primary" style="margin-top: 10px" type="submit" th:value="#{confirm}"/>
+                <input class="btn btn-primary" style="margin-top: 10px; width: 100%" type="submit" th:value="#{confirm}"/>
             </aside>
         </form>
-    </aside>
 </div>
 </body>
 </html>

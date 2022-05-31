@@ -26,7 +26,7 @@ public class User {
 
     @Column(name = "password", nullable = false)
     @NotBlank(message = "{password.error2}")
-    @Min(value = 6, message = "{password.error1}")
+//    @Min(value = 6, message = "{password.error1}")
     private String password;
 
     @Enumerated(EnumType.STRING)

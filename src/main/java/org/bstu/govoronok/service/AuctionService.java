@@ -15,6 +15,7 @@ import java.math.BigDecimal;
 import java.security.Principal;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,8 +32,10 @@ public class AuctionService {
     private final UserService userService;
 
     public List<Auction> getAllNotEndedAuctions() {
-        return auctionRepository
+        List<Auction> auctions = auctionRepository
                 .getAllByAuctionStatus_NameIsNotAndAuctionStatus_NameIsNot("END", "Unconfirmed");
+        auctions.sort(Comparator.comparing(Auction::getEndDate));
+        return auctions;
     }
 
     public void saveAuction(Auction auction) {
@@ -73,22 +76,19 @@ public class AuctionService {
     public void updateAuctionsStatuses() {
         List<Auction> auctions = getAllConfirmedAuctions();
         for (Auction auction : auctions) {
-            if (auction.getEndDate().isBefore(LocalDate.now())
-                    && !auction.getAuctionStatus().getName().equals("Unconfirmed")) {
-                auction.setAuctionStatus(auctionStatusService.getAuctionStatusByName("END"));
+            if (!auction.getAuctionStatus().getName().equals("END") &&
+                    !auction.getAuctionStatus().getName().equals("Unconfirmed")) {
+                if (auction.getStartDate().isBefore(LocalDate.now()) && auction.getEndDate().isAfter(LocalDate.now())) {
+                    auction.setAuctionStatus(auctionStatusService.getAuctionStatusByName("Ongoing"));
+                } else if (auction.getStartDate().isAfter(LocalDate.now())) {
+                    auction.setAuctionStatus(auctionStatusService.getAuctionStatusByName("Starts soon"));
+                } else if (auction.getEndDate().isBefore(LocalDate.now())) {
+                    auction.setAuctionStatus(auctionStatusService.getAuctionStatusByName("END"));
+                }
+                saveAuction(auction);
+                StatusHistory statusHistory = new StatusHistory(LocalDate.now(), auction.getAuctionStatus(), auction);
+                statusHistoryService.save(statusHistory);
             }
-            if (auction.getStartDate().isAfter(LocalDate.now())
-                    && !auction.getAuctionStatus().getName().equals("END")
-                    && !auction.getAuctionStatus().getName().equals("Unconfirmed")) {
-                auction.setAuctionStatus(auctionStatusService.getAuctionStatusByName("Starts soon"));
-            } else if (!auction.getStartDate().isAfter(LocalDate.now())
-                    && !auction.getAuctionStatus().getName().equals("END")
-                    && !auction.getAuctionStatus().getName().equals("Unconfirmed")) {
-                auction.setAuctionStatus(auctionStatusService.getAuctionStatusByName("Ongoing"));
-            }
-            saveAuction(auction);
-            StatusHistory statusHistory = new StatusHistory(LocalDate.now(), auction.getAuctionStatus(), auction);
-            statusHistoryService.save(statusHistory);
         }
         logger.info("Auction statuses updated");
     }

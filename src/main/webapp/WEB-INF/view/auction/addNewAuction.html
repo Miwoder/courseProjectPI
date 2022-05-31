@@ -12,9 +12,49 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.js"></script>
-
     <script th:src="@{/static/js/functions.js}"></script>
+
     <title th:text="#{auctions.info.button}"></title>
+
+    <script>
+        $(document).ready(function () {
+
+            var enter = new Date();
+            enter.setDate(enter.getDate() + 1);
+            $(".enterdatepicker").datepicker({
+                todayBtn:  1,
+                autoclose: true,
+                format: "yyyy-mm-dd",
+                startDate: enter,
+            }).on('changeDate', function (selected) {
+                var minDate = new Date(selected.date.valueOf());
+                minDate.setDate(minDate.getDate()+1);
+                $('.exitdatepicker').datepicker('setStartDate', minDate);
+            });
+
+            var exit = new Date();
+            exit.setDate(exit.getDate() + 2);
+            $(".exitdatepicker").datepicker({
+                autoclose: true,
+                format: "yyyy-mm-dd",
+                startDate: exit
+            }).on('changeDate', function (selected) {
+                var maxDate = new Date(selected.date.valueOf());
+                maxDate.setDate(maxDate.getDate()-1);
+                $('.enterdatepicker').datepicker('setEndDate', maxDate);
+            });
+
+            $('#btn_modal').click(function () {
+
+                myModal = new bootstrap.Modal(document.getElementById('modal'), {
+                    keyboard: false
+                })
+                myModal.show()
+
+            });
+        });
+    </script>
+
 </head>
 <body th:style="'background: url(/images/background.jpg) no-repeat; background-size: 100%;'">
 <nav class="navbar navbar-expand-lg navbar-light bg-info d-flex">

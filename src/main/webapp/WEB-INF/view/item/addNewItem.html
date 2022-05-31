@@ -60,7 +60,8 @@
                 <a href="?lang=en"><img style="width: 30px;" th:src="@{/images/uk.png}"></a>
             </li>
             <li>
-                <a href="?lang=ru"><img style="width: 30px; margin-left: 10px; margin-right: 20px" th:src="@{/images/russia.png}"></a>
+                <a href="?lang=ru"><img style="width: 30px; margin-left: 10px; margin-right: 20px"
+                                        th:src="@{/images/russia.png}"></a>
             </li>
         </ul>
     </div>
@@ -83,8 +84,8 @@
             </div>
             <br/>
             <div class="col-xs-4">
-                <label for="description" class="form-label" th:text="#{item.description}"></label>
-                <textarea class="form-control" rows="3" th:field="*{description}"></textarea>
+                <label class="form-label" th:text="#{item.description}"></label>
+                <textarea class="form-control" rows="2" th:field="*{description}"></textarea>
                 <div style="color: red" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"
                      th:text="#{item.description.error}">
                 </div>
@@ -100,7 +101,8 @@
                 </select>
             </div>
             <div class="form-actions">
-                <button style="margin-top: 10px; width: 100%" type="submit" class="btn btn-primary" th:text="#{next}"></button>
+                <button style="margin-top: 10px; width: 100%" type="submit" class="btn btn-primary"
+                        th:text="#{next}"></button>
             </div>
         </aside>
     </form>

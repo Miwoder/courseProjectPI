@@ -32,6 +32,9 @@ public class Item {
     @NotBlank(message = "{item.description.error}")
     private String description;
 
+    @Column(name = "image")
+    private Byte[] image;
+
     @ManyToOne(optional = false, cascade = CascadeType.MERGE)
     @JoinColumn(name = "user_id")
     private User user;

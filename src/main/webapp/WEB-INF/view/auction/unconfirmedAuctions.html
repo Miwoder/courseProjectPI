@@ -102,10 +102,10 @@
             <td style="border-width: 0px 1px;" th:text="${auction.getUser().getEmail()}"/>
             <td>
                 <form th:method="DELETE" th:action="@{/administration/{id}(id=${auction.getId()})}">
-                    <input class="btn btn-danger" type="submit" th:value="#{admin.delete}" />
+                    <input style="width: 100%;" class="btn btn-danger" type="submit" th:value="#{admin.delete}" />
                 </form>
                 <form th:method="PATCH" th:action="@{/administration/{id}(id=${auction.getId()})}">
-                    <input style="margin: 5px 0" class="btn btn-success" type="submit"  th:value="#{admin.approve}"/>
+                    <input style="margin: 5px 0; width: 100%" class="btn btn-success" type="submit"  th:value="#{admin.approve}"/>
                 </form>
             </td>
         </tr>
