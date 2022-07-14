@@ -9,6 +9,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
+import java.util.Base64;
+import java.util.Optional;
 import java.util.Set;
 
 @Getter
@@ -59,4 +61,8 @@ public class Auction {
 
     @OneToMany(mappedBy = "auction")
     private Set<StatusHistory> statusHistories;
+
+    public static Optional<String> getImgData(Optional<byte[]> bytes) {
+        return Optional.of(Base64.getMimeEncoder().encodeToString(bytes.get()));
+    }
 }

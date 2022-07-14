@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import javax.validation.Valid;
 import java.io.IOException;
@@ -44,19 +45,21 @@ public class ItemController {
         item.setItemType(itemTypeService.getItemTypeByName(itemTypeName));
         itemService.saveItem(item);
 
-        return "redirect:/items/" + item.getId() + "/auction/add";
-//        return "redirect:/items/" + item.getId() + "/image/add";
+        model.addAttribute("item", item);
+
+//        return "redirect:/items/" + item.getId() + "/auction/add";
+        return "redirect:/items/" + item.getId() + "/image/add";
     }
 
     @GetMapping("/items/{itemId}/image/add")
     public String getFormForItemImage(@PathVariable("itemId") Long itemId, Model model) {
-        model.addAttribute("itemId", itemId);
+        model.addAttribute("item", model.getAttribute("item"));
         return "/item/addItemImage";
     }
 
     @PostMapping("/items/{itemId}/image/add")
     public String addItemImage(@PathVariable("itemId") Long itemId,
-                               @RequestParam("fileUpl") MultipartFile multipartFile) {
+                               @RequestParam("file") MultipartFile multipartFile, Model model) {
         Item item = itemService.getItemById(itemId).get();
         try {
             item.setImage(itemService.uploadFile(multipartFile));
